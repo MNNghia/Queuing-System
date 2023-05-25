@@ -1,0 +1,33 @@
+.form-group {
+    margin-bottom: 30px;
+    label {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 27px;
+        display: inline-block;
+        text-align: left !important;
+        padding-bottom: 4px;
+    }
+
+    input, .input-password {
+        padding: 11px 12px;
+        width: 400px;
+        font-size: 18px;
+    }
+
+    ::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #a9a9b0;
+        opacity: 1; /* Firefox */
+    }
+
+    :-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: #a9a9b0;
+    }
+
+    ::-ms-input-placeholder {
+        /* Microsoft Edge */
+        color: #a9a9b0;
+    }
+}

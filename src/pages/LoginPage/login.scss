@@ -1,0 +1,66 @@
+.wrapper {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #b1b1b1;
+    // height: 100vh !important;
+
+    .Row {
+        border-radius: 15px;
+        overflow: hidden;
+
+        .Login__logo {
+            position: relative;
+            img{
+                width: 170px;
+                height: 136px;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 82px;
+            }
+
+            .login__form {
+                padding-top: 293px;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+
+                .login__forgot-password {
+                    color: #e73f3f;
+                    font-size: 14px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    margin-top: -20px;
+                    margin-bottom: 20px;
+                }
+
+                .login__forgot-password--error {
+                    text-align: center;
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+
+    .login__handle {
+        width: 592px;
+    }
+
+    .login__img {
+        width: 840px;
+        height: 810px;
+        position: relative;
+        background-color: #fff;
+        img {
+            width: 650px;
+            height: 614px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        } 
+    }
+}
+
