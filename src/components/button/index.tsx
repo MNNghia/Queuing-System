@@ -1,7 +1,7 @@
 import './button.scss'
 type CustomButtonProps = {
     text: String
-    type: 'BtnDefault' | 'BtnOutline'
+    type: 'BtnDefault' | 'BtnOutline' | 'BtnBlur'
     onClick?: () => any
 }
 

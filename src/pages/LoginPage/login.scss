@@ -1,14 +1,15 @@
 .wrapper {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    background-color: #b1b1b1;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // height: 100vh;
+    // background-color: #b1b1b1;
     // height: 100vh !important;
 
     .Row {
         border-radius: 15px;
         overflow: hidden;
+        height: 100vh;
 
         .Login__logo {
             position: relative;
@@ -32,8 +33,9 @@
                     font-size: 14px;
                     font-weight: 600;
                     cursor: pointer;
-                    margin-top: -20px;
                     margin-bottom: 20px;
+                    position: relative;
+                    top: -20px;
                 }
 
                 .login__forgot-password--error {
@@ -49,13 +51,11 @@
     }
 
     .login__img {
-        width: 840px;
-        height: 810px;
         position: relative;
         background-color: #fff;
         img {
-            width: 650px;
-            height: 614px;
+            width: 800px;
+            height: 764px;
             position: absolute;
             left: 50%;
             top: 50%;

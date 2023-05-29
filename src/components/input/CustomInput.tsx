@@ -29,6 +29,7 @@ function CustomInput({ request, placeholder, label, type, onChange, value }: Cus
                     placeholder={placeholder}
                     className="input-password"
                     autoComplete="off"
+                    onChange={onChange}
                 />
             )}
             {type == "email" && (
