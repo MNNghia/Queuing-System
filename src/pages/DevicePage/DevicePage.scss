@@ -1,0 +1,84 @@
+.wrapper-listDevice {
+
+    &-content {
+        width: 90%;
+    }
+
+    &__filter {
+        display: flex;
+        gap: 20px;
+
+        &-state {
+            max-width: 300px;
+            width: 100%;
+        }
+    }
+
+    .filter-search {
+        margin-left: auto;
+    }
+
+    .viewMore {
+        color: #4277FF;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 21px;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .viewMore-description {
+        width: 270px;
+    }
+
+}
+
+.wrapper-table {
+    width: 100%;
+    filter: drop-shadow(2px 2px 8px rgba(232, 239, 244, 0.8));
+    border-radius: 20px;
+    overflow: hidden;
+
+    .even {
+        td  {
+
+            background-color: #FFF2E7;
+        }
+    }
+
+    th {
+        background-color: #FF9138;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 24px;
+        color: #fff;
+        
+        padding: 12px 17px;
+    }
+
+    td {
+        background-color: #fff;
+        padding: 14px 20px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 21px;
+        color: #535261;
+
+        img {
+            margin-right: 10px;
+            line-height: 21px;
+            margin-bottom: 1px;
+        }
+
+        a {
+            color: #4277FF;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 21px;
+        text-decoration: underline;
+        cursor: pointer;
+        }
+    }
+}
+
+

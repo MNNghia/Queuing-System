@@ -1,4 +1,4 @@
-import { Col, Row, Space } from "antd";
+import { Col, Row} from "antd";
 import Input from "../../components/input/CustomInput";
 import images from "../../assests/images";
 import CustomButton from "../../components/button";

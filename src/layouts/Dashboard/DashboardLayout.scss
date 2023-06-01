@@ -2,39 +2,71 @@
     display: flex;
 
     .container {
-        background-color: #F7F7F7;
+        background-color: #f7f7f7;
         width: 100%;
+        padding-left: 30px;
+        padding-right: 30px;
     }
 
     .header {
         display: flex;
         justify-content: space-between;
-        padding: 30px 30px 50px;
+        padding: 50px 0px;
+        position: relative;
+        z-index: 1;
 
         .header-items {
             display: flex;
             align-items: center;
             gap: 30px;
             position: relative;
-            top: -10px;
+            top: -5px;
             margin-right: 50px;
 
             .header-items__icon-notification {
                 padding: 6px;
                 border-radius: 50%;
-                background-color: #FFF2E7;
+                background-color: #fff2e7;
                 display: flex;
                 align-items: center;
                 cursor: pointer;
 
-                .list-notification{
-                    position: relative;
+                .overlay {
+                    position: fixed;
+                    top: 0;
+                    right: 0;
+                    left: 0;
+                    bottom: 0;
+                    cursor: default;
+                }
+
+                .list-notification {
+                    .background-icon {
+                        width: 33px;
+                        height: 33px;
+                        background-color: #fff2e7;
+                        border-radius: 50%;
+
+                        &.active {
+                            background-color: #ff7506;
+                            path {
+                                fill: #fff;
+                            }
+                        }
+                    }
+
+                    .notifi-icon {
+                        position: absolute;
+                        z-index: 9999;
+                        top: 12px;
+                        left: 11px;
+                    }
 
                     .toast-notification {
-                        // display: none;
                         position: absolute;
                         top: 60px;
                         left: -50px;
+                        z-index: 999;
                     }
                 }
             }
@@ -42,8 +74,8 @@
             .header-items__user {
                 display: flex;
                 gap: 10px;
-                
-                img{
+
+                img {
                     width: 40px;
                     height: 40px;
                     border-radius: 48px;
@@ -51,7 +83,7 @@
 
                 .user-description {
                     &__hello {
-                        color: #7E7D88;
+                        color: #7e7d88;
                         font-size: 15px;
                         font-weight: 400;
                         line-height: 18px;
@@ -61,13 +93,10 @@
                         line-height: 24px;
                         font-size: 18px;
                         font-weight: 700;
-                        color: #535261
+                        color: #535261;
                     }
                 }
             }
         }
     }
-    
-
-    
 }

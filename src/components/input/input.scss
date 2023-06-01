@@ -6,14 +6,24 @@
         line-height: 27px;
         display: inline-block;
         text-align: left !important;
-        padding-bottom: 4px;
+        padding-bottom: 5px;
     }
 
     input, .input-password {
-        padding: 11px 12px;
+        padding: 11px 16px;
         width: 400px;
         font-size: 18px;
     }
+
+    .input-search {
+        width: 300px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 400;
+        padding: 9.5px 12px;
+        border: 1.5px solid #d4d4d7;
+    }
+    
 
     ::placeholder {
         /* Chrome, Firefox, Opera, Safari 10.1+ */

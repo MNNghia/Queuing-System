@@ -6,7 +6,7 @@
 
     .title {
         color: #fff;
-        background-color: #FF9138;
+        background-color: #ff9138;
         font-size: 20px;
         font-weight: 700;
         padding: 0px 25px;
@@ -14,16 +14,65 @@
         line-height: 50px;
     }
 
+    .notification-items {
+        max-height: 482px;
+        overflow-y: scroll;
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #fff;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #ffc89b;
+        border-radius: 5px;
+    }
+
+    /* Handle on hover */
+
     .notification-item {
-        padding: 12px 25px;
+        padding: 12px 15px 0px 25px;
         background-color: #fff;
+
+        &:hover {
+            background-color: #fff2e7;
+            position: relative;
+            top: 1px;
+
+            .horizontal-item {
+                background-color: #fff2ef;
+            }
+        }
+
+        .user {
+            font-weight: 700;
+            color: #bf5805;
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 4px;
+        }
+
+        .date-time {
+            color: #535261;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 25px;
+        }
 
         .horizontal-item {
             width: 100%;
             height: 1.5px;
-            background-color: #D4D4D7;
+            background-color: #d4d4d7;
             margin-top: 12px;
+            position: relative;
+            left: -8px;
         }
     }
 }
-

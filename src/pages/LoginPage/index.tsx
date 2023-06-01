@@ -3,7 +3,7 @@ import Input from "../../components/input/CustomInput";
 import "./login.scss";
 import images from "../../assests/images";
 import CustomButton from "../../components/button";
-import {  useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchUsers } from "../../redux/reducers/login/login";
 import { RootState, AppDispatch } from "../../redux/store";
@@ -21,23 +21,20 @@ function Login() {
         (state: RootState) => state.users
     );
 
-    console.log(data, loading, error);
-
     ////get data
     useEffect(() => {
         dispatch(fetchUsers());
     }, [dispatch]);
 
-
     const LoginSubmit = () => {
-    const state = data.find(
+        const state = data.find(
             (value) =>
                 value.userName === userName &&
                 value.password === password &&
                 (window.location.href = "/dashboard")
         );
-        if(!state) {
-            setStateLogin(false)
+        if (!state) {
+            setStateLogin(false);
         }
     };
 
@@ -71,7 +68,7 @@ function Login() {
                 <Col
                     className="login__handle"
                     span={10}
-                    style={{ backgroundColor: "#f6f6f6"}}
+                    style={{ backgroundColor: "#f6f6f6" }}
                 >
                     <div className="Login__logo">
                         <img src={`${images.logo}`} alt="" />
