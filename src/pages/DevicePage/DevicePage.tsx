@@ -19,7 +19,7 @@ function DevicePage() {
 
     const [isTruncated, setIsTruncated] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10
+    const itemsPerPage = 10;
     const data = [];
 
     const handlePageChange = (page: number) => {
@@ -40,7 +40,7 @@ function DevicePage() {
     const toggleTruncate = () => {
         setIsTruncated(!isTruncated);
     };
-
+ 
     //breadcrum User page
     useEffect(() => {
         const breadcrumbItems: BreadcrumbItem[] = [
@@ -57,10 +57,10 @@ function DevicePage() {
                 <div className="wrapper-listDevice-content">
                     <div className="wrapper-listDevice__filter">
                         <div className="wrapper-listDevice__filter-state">
-                            <DropDown />
+                            <DropDown type="stateActive" label="Trạng thái hoạt động" />
                         </div>
                         <div className="wrapper-listDevice__filter-state">
-                            <DropDown />
+                            <DropDown type="stateConnect" label="Trạng thái kết nối" />
                         </div>
                         <div className="filter-search">
                             <CustomInput
@@ -142,7 +142,7 @@ function DevicePage() {
                                     )}
                                 </td>
                                 <td>
-                                    <Link to="">Chi tiết</Link>
+                                    <Link to="/device/listDevice/detailDevice">Chi tiết</Link>
                                 </td>
                                 <td>
                                     <Link to="">Cập nhật</Link>
@@ -201,12 +201,13 @@ function DevicePage() {
                                     )}
                                 </td>
                                 <td>
-                                    <Link to="">Chi tiết</Link>
+                                    <Link to="/device/listDevice/detailDevice">Chi tiết</Link>
                                 </td>
                                 <td>
                                     <Link to="">Cập nhật</Link>
                                 </td>
                             </tr>
+                            
                         </table>
 
                         <CustomPagination
@@ -215,6 +216,11 @@ function DevicePage() {
                             onPageChange={handlePageChange}
                         />
                     </div>
+
+                    <Link to="/device/listDevice/addDevice" className="button-add">
+                        <img src={images.add.default} alt="" /><br/>
+                        Thêm dịch vụ
+                    </Link>
                 </div>
             </div>
         </DashboardLayout>

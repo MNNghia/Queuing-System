@@ -27,6 +27,7 @@
                 position: absolute;
                 left: 50%;
                 transform: translateX(-50%);
+                width: 55%;
 
                 .login__forgot-password {
                     color: #e73f3f;
@@ -39,8 +40,10 @@
                 }
 
                 .login__forgot-password--error {
-                    text-align: center;
-                    margin-top: 20px;
+                    position: relative;
+                    transform: translateX(-50%);
+                    left: 38%;
+                    top: 20px;
                 }
             }
         }

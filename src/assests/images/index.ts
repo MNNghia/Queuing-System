@@ -17,7 +17,10 @@ const images = {
     nav_service: require('./nav_service.svg'),
     menu_number: require('./menu_number.svg'),
     nav_report: require('./nav_report.svg'),
-    nav_setting: require('./nav_setting.svg')
+    nav_setting: require('./nav_setting.svg'),
+    add: require('./add.svg'),
+    deviceUpdata: require('./deviceUpdata.svg'),
+    arrow_right: require('./arrow_right.svg')
 
 
 };

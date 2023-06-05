@@ -30,7 +30,7 @@ function CustomInput({
             <div>
                 <label htmlFor="">
                     {label}
-                    <span>{request ? "*" : ""}</span>
+                    <span>{request ? <span className="require">*</span> : ""}</span>
                 </label>
             </div>
             {type === "text" && (

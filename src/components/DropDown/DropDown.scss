@@ -1,7 +1,7 @@
 .dropdown {
     .dropdown-label {
         font-size: 16px;
-        line-height: 24px;
+        line-height: 27px;
         font-weight: 600;
         color: #282739;
         margin-bottom: 8px;
@@ -17,7 +17,7 @@
     }
 
     .dropdown-content {
-        width: 300px;
+        width: 100%;
         cursor: pointer;
         position: relative;
         z-index: 2; 
