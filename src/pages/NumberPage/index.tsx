@@ -1,4 +1,4 @@
-import "./ServicePage.scss";
+import './Number.scss'
 import DashboardLayout from "../../layouts/Dashboard/DashboardLayout";
 import {
     setBreadcrumb,
@@ -16,13 +16,11 @@ import TruncateMarkup from "react-truncate-markup";
 import { Link } from "react-router-dom";
 import CustomPagination from "../../components/Pagination";
 
+function NumberPage() {
 
-
-function ServicePage() {
     const dispatch = useDispatch<AppDispatch>();
 
-    const [isTruncated, setIsTruncated] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
+     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const data = [];
 
@@ -32,8 +30,8 @@ function ServicePage() {
 
     useEffect(() => {
         const breadcrumbItems: BreadcrumbItem[] = [
-            { label: "Dịch vụ", url: "" },
-            { label: "Quản lý dịch vụ", url: "/service" },
+            { label: "Cấp số", url: "" },
+            { label: "Danh sách cấp số", url: "/number" },
         ];
         dispatch(setBreadcrumb(breadcrumbItems));
     }, [dispatch]);
@@ -41,25 +39,34 @@ function ServicePage() {
     const onChange: DatePickerProps["onChange"] = (date, dateString) => {
         console.log(date, dateString);
     };
-
-    const toggleTruncate = () => {
-        setIsTruncated(!isTruncated);
-    };
-
-    return (
+    return (  
         <DashboardLayout>
-            <div className="wrapper-service">
-                <div className="title">Quản lý dịch vụ</div>
-                <div className="wrapper-service-content">
-                    <div className="service-content__filter-items">
-                        <div className="service-content__filter-item">
+            <div className="wrapper-number">
+                <div className="title">Quản lý cấp số</div>
+                <div className="wrapper-number__content">
+                    <div className="content-filter">
+                        <div className="content-filter__item drop-down">
+                            <DropDown
+                                type="stateActive"
+                                label="Trạng thái hoạt động "
+                            />
+                        </div>
+
+                        <div className="content-filter__item drop-down">
+                            <DropDown
+                                type="stateActive"
+                                label="Trạng thái hoạt động"
+                            />
+                        </div>
+
+                        <div className="content-filter__item drop-down">
                             <DropDown
                                 type="stateActive"
                                 label="Trạng thái hoạt động"
                             />
                         </div>
                         
-                        <div className="service-content__filter-item data-time-item">
+                        <div className="content-filter__item data-time-item">
                             <p>Chọn thời thời gian</p>
                             <div className="date-time">
                                 <DatePicker onChange={onChange} className="data-time__item" />
@@ -67,12 +74,12 @@ function ServicePage() {
                                 <DatePicker onChange={onChange} className="data-time__item" />
                             </div>
                         </div>
-                        <div className="service-content__filter-item">
+
+                        <div className="content-filter__item">
                             <CustomInput type="search" label="Từ khóa" placeholder="nhập từ khóa" />
                         </div>
                     </div>
-
-                    <div className="service-content__table">
+                    <div className="content-table">
                         <table className="wrapper-table">
                             <tr>
                                 <th>Mã dịch vụ</th>
@@ -125,15 +132,16 @@ function ServicePage() {
                             onPageChange={handlePageChange}
                         />
                     </div>
-                    
-                    <Link to="/service/addService" className="button-add">
+
+                    <Link to="/number/numberNew" className="button-add">
                         <img src={images.add.default} alt="" /><br/>
-                        Thêm dịch vụ
+                        Cáp số mới
                     </Link>
                 </div>
             </div>
+
         </DashboardLayout>
     );
 }
 
-export default ServicePage;
+export default NumberPage;

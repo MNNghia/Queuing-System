@@ -20,7 +20,10 @@ const images = {
     nav_setting: require('./nav_setting.svg'),
     add: require('./add.svg'),
     deviceUpdata: require('./deviceUpdata.svg'),
-    arrow_right: require('./arrow_right.svg')
+    arrow_right: require('./arrow_right.svg'),
+    comeBack: require('./comeBack.svg'),
+    cancel: require('./cancel.svg'),
+    download: require('./download.svg')
 
 
 };

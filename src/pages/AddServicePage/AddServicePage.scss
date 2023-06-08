@@ -9,7 +9,6 @@
             display: flex;
             gap: 20px;
             align-items: start;
-            
 
             .input-item {
                 width: 50%;
@@ -28,5 +27,58 @@
                 }
             }
         }
+
+        .addService-content__checkbox {
+            .checkbox-option {
+                // max-width: 50%;
+                width: 30%;
+                &-item {
+                    td {
+                        height: 50px;
+                    }
+
+                    &_label {
+                        font-weight: 600;
+                        font-size: 18px;
+                        line-height: 24px;
+                        color: #282739;
+                    }
+                    input[type="text"] {
+                        width: 61px;
+                        font-weight: 400;
+                        font-size: 17px;
+                        line-height: 24px;
+                        color: #535261;
+                    }
+
+                    &__input {
+                        display: flex;
+                        gap: 10px;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+        .addService-content__node {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            color: #7e7d88;
+            margin-top: 20px;
+        }
     }
+        &__btn {
+            margin-top: 30px;
+            display: flex;
+            // gap: 100px;
+            justify-content: center;
+            gap: 30px;
+
+            div {
+                margin: 0;
+                padding: 5px;
+            }
+        }
+        
+    
 }

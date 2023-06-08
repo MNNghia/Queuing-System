@@ -9,6 +9,10 @@ import ManagerDevicePage from './pages/ManagerDevicePage';
 import DeviceDetailPage from './pages/DeviceDetailPage';
 import ServicePage from './pages/ServicePage';
 import AddServicePage from './pages/AddServicePage';
+import ServiceDetailPage from './pages/ServiceDetailPage';
+import NumberPage from './pages/NumberPage';
+import NumberNewPage from './pages/NumberNewPage';
+import ReportPage from './pages/ReportPage';
 
 
 function App() {
@@ -23,6 +27,10 @@ function App() {
         <Route path="/device/listDevice/detailDevice" element={<DeviceDetailPage/>}/>
         <Route path="/service" element={<ServicePage/>}/>
         <Route path="/service/addService" element={<AddServicePage/>}/>
+        <Route path="/service/serviceDetail" element={<ServiceDetailPage/>} />
+        <Route path="/number" element={<NumberPage/>} />
+        <Route path="/number/numberNew" element={<NumberNewPage/>} />
+        <Route path="/report" element={<ReportPage/>}/>
       </Routes>
       
     </div>

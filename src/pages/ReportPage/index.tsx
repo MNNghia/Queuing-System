@@ -1,4 +1,4 @@
-import "./ServicePage.scss";
+import "./Report.scss";
 import DashboardLayout from "../../layouts/Dashboard/DashboardLayout";
 import {
     setBreadcrumb,
@@ -16,12 +16,9 @@ import TruncateMarkup from "react-truncate-markup";
 import { Link } from "react-router-dom";
 import CustomPagination from "../../components/Pagination";
 
-
-
-function ServicePage() {
+function ReportPage() {
     const dispatch = useDispatch<AppDispatch>();
 
-    const [isTruncated, setIsTruncated] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const data = [];
@@ -32,8 +29,8 @@ function ServicePage() {
 
     useEffect(() => {
         const breadcrumbItems: BreadcrumbItem[] = [
-            { label: "Dịch vụ", url: "" },
-            { label: "Quản lý dịch vụ", url: "/service" },
+            { label: "Báo cáo", url: "" },
+            { label: "Lập báo cáo", url: "/report" },
         ];
         dispatch(setBreadcrumb(breadcrumbItems));
     }, [dispatch]);
@@ -42,37 +39,29 @@ function ServicePage() {
         console.log(date, dateString);
     };
 
-    const toggleTruncate = () => {
-        setIsTruncated(!isTruncated);
-    };
-
     return (
         <DashboardLayout>
-            <div className="wrapper-service">
-                <div className="title">Quản lý dịch vụ</div>
-                <div className="wrapper-service-content">
-                    <div className="service-content__filter-items">
-                        <div className="service-content__filter-item">
-                            <DropDown
-                                type="stateActive"
-                                label="Trạng thái hoạt động"
+            <div className="wrapper-report">
+                <div className="report-filter">
+                    <div className="content-filter__item data-time-item">
+                        <p>Chọn thời thời gian</p>
+                        <div className="date-time">
+                            <DatePicker
+                                onChange={onChange}
+                                className="data-time__item"
+                            />
+                            <img
+                                src={images.arrow_right.default}
+                                alt=""
+                                style={{ padding: "0 10px" }}
+                            />
+                            <DatePicker
+                                onChange={onChange}
+                                className="data-time__item"
                             />
                         </div>
-                        
-                        <div className="service-content__filter-item data-time-item">
-                            <p>Chọn thời thời gian</p>
-                            <div className="date-time">
-                                <DatePicker onChange={onChange} className="data-time__item" />
-                                <img src={images.arrow_right.default} alt="" style={{padding: "0 10px"}} />
-                                <DatePicker onChange={onChange} className="data-time__item" />
-                            </div>
-                        </div>
-                        <div className="service-content__filter-item">
-                            <CustomInput type="search" label="Từ khóa" placeholder="nhập từ khóa" />
-                        </div>
                     </div>
-
-                    <div className="service-content__table">
+                    <div className="content-table">
                         <table className="wrapper-table">
                             <tr>
                                 <th>Mã dịch vụ</th>
@@ -124,11 +113,12 @@ function ServicePage() {
                             totalItems={1} //data.length
                             onPageChange={handlePageChange}
                         />
+
                     </div>
-                    
-                    <Link to="/service/addService" className="button-add">
-                        <img src={images.add.default} alt="" /><br/>
-                        Thêm dịch vụ
+
+                    <Link to="/number/numberNew" className="button-add">
+                        <img src={images.download.default} alt="" /><br/>
+                        Cáp số mới
                     </Link>
                 </div>
             </div>
@@ -136,4 +126,4 @@ function ServicePage() {
     );
 }
 
-export default ServicePage;
+export default ReportPage;
