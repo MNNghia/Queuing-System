@@ -37,15 +37,15 @@ function Menubar() {
                             <img src={images.nav_setting.default} alt="" />
                             Cài đặt hệ thống
                             <div className="setting-system__items">
-                                <div className="setting-system__item">
+                                <Link to="/settingSystem/roleManage" className="setting-system__item">
                                     Quản lý vai trò
-                                </div>
-                                <div className="setting-system__item">
+                                </Link>
+                                <Link to="/settingSystem/accountManage" className="setting-system__item">
                                     Quản lý tài khoản
-                                </div>
-                                <div className="setting-system__item">
+                                </Link>
+                                <Link to="/settingSystem/diaryAction" className="setting-system__item">
                                     Nhật ký người dùng
-                                </div>
+                                </Link>
                             </div>
                         </div>
                     </div>

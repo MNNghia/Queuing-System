@@ -8,10 +8,13 @@ import { useEffect } from "react";
 import { AppDispatch } from "../../redux/store";
 import DashboardLayout from "../../layouts/Dashboard/DashboardLayout";
 import images from "../../assests/images";
+import DoughnutChart from "../../components/Doughnut";
 
 
 
 function DashBoardPage() {
+
+    
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
@@ -94,7 +97,9 @@ function DashBoardPage() {
                     {/* Begin: Overview-index */}
                     <div className="overview-index">
                         <div className="overview-percent__item">
-                            <div className="percent-item">a</div>
+                            <div className="percent-item">
+                                {/* <DoughnutChart /> */}
+                            </div>
 
                             <div className="total-device">
                                 <div className="total-device__number">

@@ -1,4 +1,4 @@
-import "./ServicePage.scss";
+import './DiaryAction.scss'
 import DashboardLayout from "../../layouts/Dashboard/DashboardLayout";
 import {
     setBreadcrumb,
@@ -12,17 +12,14 @@ import type { DatePickerProps } from "antd";
 import { DatePicker, Space } from "antd";
 import CustomInput from "../../components/input/CustomInput";
 import images from "../../assests/images";
-import TruncateMarkup from "react-truncate-markup";
 import { Link } from "react-router-dom";
 import CustomPagination from "../../components/Pagination";
 
+function DiaryActionPage() {
 
-
-function ServicePage() {
     const dispatch = useDispatch<AppDispatch>();
 
-    const [isTruncated, setIsTruncated] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
+     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const data = [];
 
@@ -32,8 +29,8 @@ function ServicePage() {
 
     useEffect(() => {
         const breadcrumbItems: BreadcrumbItem[] = [
-            { label: "Dịch vụ", url: "" },
-            { label: "Quản lý dịch vụ", url: "/service" },
+            { label: "Cài đặt hệ thống", url: "" },
+            { label: "Nhật ký hoạt động", url: "/settingSystem/diaryAction" },
         ];
         dispatch(setBreadcrumb(breadcrumbItems));
     }, [dispatch]);
@@ -41,25 +38,14 @@ function ServicePage() {
     const onChange: DatePickerProps["onChange"] = (date, dateString) => {
         console.log(date, dateString);
     };
-
-    const toggleTruncate = () => {
-        setIsTruncated(!isTruncated);
-    };
-
-    return (
+    return (  
         <DashboardLayout>
-            <div className="wrapper-service">
-                <div className="title">Quản lý dịch vụ</div>
-                <div className="wrapper-service-content">
-                    <div className="service-content__filter-items">
-                        <div className="service-content__filter-item">
-                            <DropDown
-                                type="stateActive"
-                                label="Trạng thái hoạt động"
-                            />
-                        </div>
+            <div className="wrapper-diaryAction">
+                <div className="title">Quản lý cấp số</div>
+                <div className="wrapper-diaryAction__content">
+                    <div className="content-filter">
                         
-                        <div className="service-content__filter-item data-time-item">
+                        <div className="content-filter__item data-time-item">
                             <p>Chọn thời thời gian</p>
                             <div className="date-time">
                                 <DatePicker onChange={onChange} className="data-time__item" />
@@ -67,12 +53,12 @@ function ServicePage() {
                                 <DatePicker onChange={onChange} className="data-time__item" />
                             </div>
                         </div>
-                        <div className="service-content__filter-item">
+
+                        <div className="content-filter__item">
                             <CustomInput type="search" label="Từ khóa" placeholder="nhập từ khóa" />
                         </div>
                     </div>
-
-                    <div className="service-content__table">
+                    <div className="content-table">
                         <table className="wrapper-table">
                             <tr>
                                 <th>Mã dịch vụ</th>
@@ -125,15 +111,12 @@ function ServicePage() {
                             onPageChange={handlePageChange}
                         />
                     </div>
-                    
-                    <Link to="/service/addService" className="button-add">
-                        <img src={images.add.default} alt="" /><br/>
-                        Thêm thiết bị 
-                    </Link>
+
                 </div>
             </div>
+
         </DashboardLayout>
     );
 }
 
-export default ServicePage;
+export default DiaryActionPage;

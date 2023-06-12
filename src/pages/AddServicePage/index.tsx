@@ -130,11 +130,11 @@ function AddServicePage() {
                                     <input
                                         type="checkbox"
                                         name=""
-                                        id=""
+                                        id="all"
                                         className="inputCheckbox"
                                     />
-                                    <label className="checkbox-option-item_label">
-                                        Reset mỗi ngày
+                                    <label htmlFor="all" className="checkbox-option-item_label">
+                                        Tất cả
                                     </label>
                                 </td>
                             </tr>
