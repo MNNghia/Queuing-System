@@ -1,0 +1,68 @@
+.wrapper-addRole {
+    .wrapper-addRole__content {
+        background-color: #fff;
+        padding: 16px 24px;
+        box-shadow: 2px 2px 8px rgba(232, 239, 244, 0.8);
+        border-radius: 16px;
+    }
+    .content-description {
+        display: flex;
+        gap: 24px;
+        width: 100%;
+        &__input-text {
+            width: 50%;
+
+            .textarea-label {
+                font-size: 18px;
+                font-weight: 600;
+                line-height: 27px;
+                display: inline-block;
+                text-align: left !important;
+                padding-bottom: 8px;
+            }
+
+            .input-textArea {
+                font-size: 18px;
+            }
+        }
+
+        .addRole-content__node {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            color: #7e7d88;
+            margin-top: 20px;
+        }
+
+        &__input-checkbox {
+            flex: 1;
+            .heading {
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 24px;
+                margin-bottom: 8px;
+            }
+
+            .input-checkbox-content {
+                background: #fff2e7;
+                border-radius: 8px;
+                padding: 16px 24px;
+                width: 100%;
+
+                &__heading {
+                    color: #ff7506;
+                    font-weight: 700;
+                    font-size: 20px;
+                    line-height: 30px;
+                    margin-bottom: 12px;
+                }
+
+                &__group {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 16px;
+                }
+            }
+        }
+    }
+}
