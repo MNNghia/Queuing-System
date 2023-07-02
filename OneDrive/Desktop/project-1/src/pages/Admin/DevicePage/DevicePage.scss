@@ -1,0 +1,38 @@
+.wrapper-listDevice {
+
+    &-content {
+        width: 93%;
+    }
+
+    &__filter {
+        display: flex;
+        gap: 20px;
+
+        &-state {
+            max-width: 300px;
+            width: 100%;
+        }
+    }
+
+    .filter-search {
+        margin-left: auto;
+    }
+
+    .viewMore {
+        color: #4277FF;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 21px;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .viewMore-description {
+        width: 270px;
+    }
+
+}
+
+
+
+

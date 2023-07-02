@@ -1,0 +1,114 @@
+.wrapper-numberNew {
+    .wrapper-number__content {
+        background-color: #fff;
+        height: 700px;
+        width: 100%;
+        margin: 0;
+        box-shadow: 2px 2px 8px rgba(232, 239, 244, 0.8);
+        border-radius: 16px;
+    }
+
+    .number-content {
+        width: 450px;
+        margin: auto;
+        text-align: center;
+
+        &__heading {
+            color: #ff7506;
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 70px;
+            padding: 10px;
+        }
+
+        &__option {
+            color: #535261;
+            font-weight: 700;
+            font-size: 22px;
+            line-height: 40px;
+        }
+
+        &__dropdown {
+            text-align: left;
+        }
+    }
+
+    .modal {
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .content {
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            
+        }
+
+        .icon-cancel{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+        }
+
+        .content-description {
+            background-color: #fff;
+            padding: 48px 95px;
+            text-align: center;
+
+            .heading {
+                color: #535261;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 32px;
+                line-height: 48px;
+            }
+
+            .number {
+                color: #ff7506;
+                font-weight: 800;
+                font-size: 56px;
+                line-height: 60px;
+                padding: 24px 0px;
+            }
+
+            .positon {
+                color: #282739;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 27px;
+
+                span {
+                    font-weight: 700;
+                }
+            }
+        }
+
+        .content-time {
+            background-color: #ff9138;
+            padding: 16px 0px;
+            text-align: center;
+
+            div {
+                font-weight: 700;
+                font-size: 22px;
+                line-height: 33px;
+                color: #fff;
+            }
+            
+            .time-grant {
+                padding-bottom: 13px;
+            }
+        }
+    }
+}
