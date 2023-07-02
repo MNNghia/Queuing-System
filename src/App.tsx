@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.scss";
 import Login from "./layouts/Login/Login";
 import { Routes, Route } from "react-router-dom";
@@ -20,14 +19,22 @@ import AccountManagePage from "./pages/Admin/AccountManagePage";
 import AddAccountPage from "./pages/Admin/AddAccountPage";
 import DiaryActionPage from "./pages/Admin/DiaryActionPage";
 import AdminLayout from "./layouts/Admin";
+import SelectViewPage from "./pages/SettingSystem/SelectViewPage";
+import UpdateDevicePage from "./pages/Admin/UpdateDevicePage";
+import UpdateServicePage from "./pages/Admin/UpdateServicePage";
+import NumberDetailPage from "./pages/Admin/numberDetailpage";
+import UpdateRolePage from "./pages/Admin/UpdateRolePage";
+import UpdateAccountPage from "./pages/Admin/AccountUpdatePage";
 
 function App() {
+    
     return (
         <div className="App">
             {
-                window.location.pathname === "/" || window.location.pathname === "/resetPassword"? <Routes>
+                window.location.pathname === "/" || window.location.pathname === "/resetPassword" || window.location.pathname === "/settingSystem" ? <Routes>
                 <Route index path="/" element={<Login />} />
                 <Route path="/resetPassword" element={<ResetPasswordPage />} />
+                <Route path="/settingSystem" element={<SelectViewPage/>} />
             </Routes> : 
                     <AdminLayout>
                 <Routes>
@@ -66,6 +73,10 @@ function App() {
                         element={<AddRolePage />}
                     />
                     <Route
+                        path="/settingSystem/roleManage/updateRole"
+                        element={<UpdateRolePage />}
+                    />
+                    <Route
                         path="/settingSystem/accountManage"
                         element={<AccountManagePage />}
                     />
@@ -76,6 +87,22 @@ function App() {
                     <Route
                         path="/settingSystem/diaryAction"
                         element={<DiaryActionPage />}
+                    />
+                    <Route 
+                        path="/device/listDevice/updateDevice"
+                        element={<UpdateDevicePage/>}
+                    />
+                    <Route 
+                        path="/service/listService/updateService"
+                        element={<UpdateServicePage/>}
+                    />
+                    <Route 
+                        path="/number/numberDetail"
+                        element={<NumberDetailPage/>}
+                    />
+                    <Route 
+                        path="/settingSystem/accountManage/updateAccount"
+                        element={<UpdateAccountPage/>}
                     />
                 </Routes>
             </AdminLayout>

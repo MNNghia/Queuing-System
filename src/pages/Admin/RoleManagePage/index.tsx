@@ -1,23 +1,28 @@
 import './RoleManage.scss'
-import DashboardLayout from "../../../layouts/Admin";
 import {
     setBreadcrumb,
     BreadcrumbItem,
 } from "../../../redux/reducers/Breadcrumb/Breadcrumb";
 import { useEffect, useState } from "react";
-import { AppDispatch } from "../../../redux/store";
+import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch } from "react-redux";
-import DropDown from "../../../components/DropDown";
-import type { DatePickerProps } from "antd";
-import { DatePicker, Space } from "antd";
 import CustomInput from "../../../components/input/CustomInput";
 import images from "../../../assests/images";
-import TruncateMarkup from "react-truncate-markup";
 import { Link } from "react-router-dom";
-import CustomPagination from "../../../components/Pagination";
+import { fetchRole } from '../../../redux/reducers/role';
+import { useSelector } from 'react-redux';
 
 function RoleManagePage() {
     const dispatch = useDispatch<AppDispatch>();
+
+    const { data, loading, error } = useSelector(
+        (state: RootState) => state.role
+    );
+
+    ////get data
+    useEffect(() => {
+        dispatch(fetchRole());
+    }, [dispatch]);
 
     useEffect(() => {
         const breadcrumbItems: BreadcrumbItem[] = [
@@ -38,48 +43,28 @@ function RoleManagePage() {
                     <div className="table-content">
                         <table className="wrapper-table">
                             <tr>
-                                <th>Mã dịch vụ</th>
-                                <th>Tên dịch vụ</th>
+                                <th>Tên vai trò</th>
+                                <th>Số người dùng</th>
                                 <th>Mô tả</th>
-                                <th>Trạng thái hoạt động</th>
-                                
-                                <th></th>
                                 <th></th>
                             </tr>
-                            <tr>
-                                <td>KIO.01</td>
-                                <td>Kiosk</td>
-                                <td>192.168.1.10</td>
+                            {
+                                data.map((value, index) => <tr className={index % 2 !==0? "even": ''} key={index}>
+                                <td>{value.nameRole}</td>
+                                <td>{}</td>
+                                <td>{value.description}</td>
                                 <td>
-                                    <img
-                                        src={images.stopAction.default}
-                                        alt=""
-                                    />
-                                    Ngưng hoạt động
+                                    <Link
+                                        to={{
+                                            pathname: "/settingSystem/roleManage/updateRole",
+                                            search: `roleId=${value.id}`,
+                                        }}
+                                    >
+                                        Cập nhật
+                                    </Link>
                                 </td>
-                                <td>
-                                    <Link to="/service/serviceDetail">Chi tiết</Link>
-                                </td>
-                                <td>
-                                    <Link to="">Cập nhật</Link>
-                                </td>
-                            </tr>
-                            <tr className="even">
-                                <td>KIO.01</td>
-                                <td>Kiosk</td>
-                                <td>192.168.1.10</td>
-                                <td>
-                                    <img src={images.action.default} alt="" />
-                                    Hoạt động
-                                </td>
-                                <td>
-                                    <Link to="/service/serviceDetail">Chi tiết</Link>
-                                </td>
-                                <td>
-                                    <Link to="">Cập nhật</Link>
-                                </td>
-                            </tr>
-                            
+                            </tr>)
+                            }
                         </table>
                     </div>
 

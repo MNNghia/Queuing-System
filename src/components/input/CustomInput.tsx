@@ -9,7 +9,7 @@ type CustomInputProps = {
     placeholder?: string;
     label: string;
     type: "text" | "password" | "email" | "disabled" | "search";
-    value?: string;
+    value?: any;
     onChange?: (e: any) => any;
     style?: CSSProperties;
     disabledValue?: string
@@ -49,6 +49,7 @@ function CustomInput({
                     autoComplete="off"
                     onChange={onChange}
                     style={style}
+                    value={value}
                 />
             )}
             {type === "email" && (
@@ -70,7 +71,9 @@ function CustomInput({
             {type === "search" &&
                 <Input  suffix={
                     <img src={images.search.default} alt=""/>
-                } className="input-search" placeholder={placeholder} />
+                } className="input-search" placeholder={placeholder} 
+                onChange={onChange}
+                />
             }
         </div>
     );

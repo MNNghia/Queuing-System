@@ -111,10 +111,10 @@ function ServiceDetailPage() {
                     <div className="serviceDetail-content__list">
                         <div className="service-content__filter-items">
                             <div className="service-content__filter-item">
-                                <DropDown
+                                {/* <DropDown
                                     type="stateActive"
                                     label="Trạng thái hoạt động"
-                                />
+                                /> */}
                             </div>
 
                             <div className="service-content__filter-item data-time-item">

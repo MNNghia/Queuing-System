@@ -1,32 +1,60 @@
-import './Number.scss'
-import DashboardLayout from "../../../layouts/Admin";
+import "./Number.scss";
 import {
     setBreadcrumb,
     BreadcrumbItem,
 } from "../../../redux/reducers/Breadcrumb/Breadcrumb";
 import { useEffect, useState } from "react";
-import { AppDispatch } from "../../../redux/store";
+import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch } from "react-redux";
 import DropDown from "../../../components/DropDown";
 import type { DatePickerProps } from "antd";
-import { DatePicker, Space } from "antd";
+import { DatePicker } from "antd";
 import CustomInput from "../../../components/input/CustomInput";
 import images from "../../../assests/images";
-import TruncateMarkup from "react-truncate-markup";
 import { Link } from "react-router-dom";
 import CustomPagination from "../../../components/Pagination";
+import { useSelector } from "react-redux";
+import { fetchNumber } from "../../../redux/reducers/number";
 
 function NumberPage() {
-
     const dispatch = useDispatch<AppDispatch>();
 
-     const [currentPage, setCurrentPage] = useState(1);
+    const { data, loading, error } = useSelector(
+        (state: RootState) => state.number
+    );
+
+    ////get data
+    useEffect(() => {
+        dispatch(fetchNumber());
+    }, [dispatch]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchText, setSearchText] = useState("");
+    const [searchResult, setSearchResult] = useState<any>();
+    const [fill, setFill] = useState<any>({serviceName : "Tất cả", state: "Tất cả", source: "Tất cả" })
+    const [fillresult, setFillresult] = useState<any>()
     const itemsPerPage = 10;
-    const data = [];
+    const dataPage = [];
+
+    console.log(fillresult)
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
+
+    useEffect(() => {
+        const handleSearch = () => {
+            // Thuật toán tìm kiếm chuỗi con Brute-Force
+            const text = searchText.toLowerCase();
+
+            const result = data.filter((value) =>
+                value.nameClient.toLowerCase().includes(text)
+            );
+
+            setSearchResult(result);
+        };
+        handleSearch();
+    }, [searchText, data]);
 
     useEffect(() => {
         const breadcrumbItems: BreadcrumbItem[] = [
@@ -39,106 +67,124 @@ function NumberPage() {
     const onChange: DatePickerProps["onChange"] = (date, dateString) => {
         console.log(date, dateString);
     };
-    return (  
-            <div className="wrapper-number">
-                <div className="title">Quản lý cấp số</div>
-                <div className="wrapper-number__content">
-                    <div className="content-filter">
-                        <div className="content-filter__item drop-down">
-                            <DropDown
-                                type="stateActive"
-                                label="Trạng thái hoạt động "
-                            />
-                        </div>
 
-                        <div className="content-filter__item drop-down">
-                            <DropDown
-                                type="stateActive"
-                                label="Trạng thái hoạt động"
-                            />
-                        </div>
+    useEffect(() => {
+        if(fill.serviceName === "Tất cả" && fill.source === "Tất cả" && fill.state === "Tất cả"){
+            setFillresult(data)
+        } else {
+            //logic
+        }
+    },[fill,data])
 
-                        <div className="content-filter__item drop-down">
-                            <DropDown
-                                type="stateActive"
-                                label="Trạng thái hoạt động"
+    return (
+        <div className="wrapper-number">
+            <div className="title">Quản lý cấp số</div>
+            <div className="wrapper-number__content">
+                <div className="content-filter">
+                    <div className="content-filter__item drop-down">
+                        <DropDown
+                                type="serviceName"
+                                label="Tên dịch vụ "
+                                onClick ={(value: string) => setFill({...fill, serviceName: value})}
                             />
-                        </div>
-                        
-                        <div className="content-filter__item data-time-item">
-                            <p>Chọn thời thời gian</p>
-                            <div className="date-time">
-                                <DatePicker onChange={onChange} className="data-time__item" />
-                                <img src={images.arrow_right.default} alt="" style={{padding: "0 10px"}} />
-                                <DatePicker onChange={onChange} className="data-time__item" />
-                            </div>
-                        </div>
+                    </div>
 
-                        <div className="content-filter__item">
-                            <CustomInput type="search" label="Từ khóa" placeholder="nhập từ khóa" />
+                    <div className="content-filter__item drop-down">
+                        <DropDown
+                                type="state"
+                                label="Tình trạng"
+                                onClick={(value: string) => setFill({...fill, state: value})}/>
+                    </div>
+
+                    <div className="content-filter__item drop-down">
+                        <DropDown
+                                type="source"
+                                label="Nguồn cấp"
+                                onClick = {(value: string) => setFill({...fill, source: value})}/>
+                    </div>
+
+                    <div className="content-filter__item data-time-item">
+                        <p>Chọn thời thời gian</p>
+                        <div className="date-time">
+                            <DatePicker
+                                onChange={onChange}
+                                className="data-time__item"
+                            />
+                            <img
+                                src={images.arrow_right.default}
+                                alt=""
+                                style={{ padding: "0 10px" }}
+                            />
+                            <DatePicker
+                                onChange={onChange}
+                                className="data-time__item"
+                            />
                         </div>
                     </div>
-                    <div className="content-table">
-                        <table className="wrapper-table">
-                            <tr>
-                                <th>Mã dịch vụ</th>
-                                <th>Tên dịch vụ</th>
-                                <th>Mô tả</th>
-                                <th>Trạng thái hoạt động</th>
-                                
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <td>KIO.01</td>
-                                <td>Kiosk</td>
-                                <td>192.168.1.10</td>
-                                <td>
-                                    <img
-                                        src={images.stopAction.default}
-                                        alt=""
-                                    />
-                                    Ngưng hoạt động
-                                </td>
-                                <td>
-                                    <Link to="/service/serviceDetail">Chi tiết</Link>
-                                </td>
-                                <td>
-                                    <Link to="">Cập nhật</Link>
-                                </td>
-                            </tr>
-                            <tr className="even">
-                                <td>KIO.01</td>
-                                <td>Kiosk</td>
-                                <td>192.168.1.10</td>
-                                <td>
-                                    <img src={images.action.default} alt="" />
-                                    Hoạt động
-                                </td>
-                                <td>
-                                    <Link to="/service/serviceDetail">Chi tiết</Link>
-                                </td>
-                                <td>
-                                    <Link to="">Cập nhật</Link>
-                                </td>
-                            </tr>
-                            
-                        </table>
 
-                        <CustomPagination
-                            itemsPerPage={itemsPerPage}
-                            totalItems={1} //data.length
-                            onPageChange={handlePageChange}
+                    <div className="content-filter__item">
+                        <CustomInput
+                            type="search"
+                            label="Từ khóa"
+                            placeholder="nhập từ khóa"
+                            onChange={(e) => {
+                                setSearchText(e.target.value);
+                            }}
                         />
                     </div>
-
-                    <Link to="/number/numberNew" className="button-add">
-                        <img src={images.add.default} alt="" /><br/>
-                        Cáp số mới
-                    </Link>
                 </div>
-            </div>
+                <div className="content-table">
+                    <table className="wrapper-table">
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên khách hàng</th>
+                            <th>Tên dịch vụ</th>
+                            <th>Thời gian cấp</th>
+                            <th>Hạn sử dụng</th>
+                            <th>Trạng thái</th>
+                            <th>Nguồn cấp</th>
+                            <th></th>
+                        </tr>
+                        {data.map((value, index) => (
+                            <tr key={index}>
+                                <td>{value.STT}</td>
+                                <td>{value.nameClient}</td>
+                                <td>{value.nameService}</td>
+                                <td>{value.time}</td>
+                                <td>{value.expiry}</td>
+                                <td>
+                                    <img src={images.waiting.default} alt="" />
+                                    Đang chờ
+                                </td>
+                                <td>{value.source}</td>
+                                <td>
+                                    <Link
+                                        to={{
+                                            pathname: "/number/numberDetail",
+                                            search: `numberId=${value.id}`,
+                                        }}
+                                    >
+                                        Chi tiết
+                                    </Link>
+                                </td>
+                            </tr>
+                        ))}
+                    </table>
 
+                    <CustomPagination
+                        itemsPerPage={itemsPerPage}
+                        totalItems={1} //data.length
+                        onPageChange={handlePageChange}
+                    />
+                </div>
+
+                <Link to="/number/numberNew" className="button-add">
+                    <img src={images.add.default} alt="" />
+                    <br />
+                    Cáp số mới
+                </Link>
+            </div>
+        </div>
     );
 }
 

@@ -23,7 +23,16 @@ const images = {
     arrow_right: require('./arrow_right.svg'),
     comeBack: require('./comeBack.svg'),
     cancel: require('./cancel.svg'),
-    download: require('./download.svg')
+    download: require('./download.svg'),
+    logout: require('./logout.svg'),
+    setting: require('./setting.svg'),
+    waiting: require('./waiting.svg'),
+    skip: require('./skip.svg'),
+    used: require('./used.svg'),
+    STT : require('./stt.svg'),
+    userCall: require('./userCall.svg'),
+    numberSkip: require('./numberSkip.svg'),
+    down: require('./down.svg')
 
 
 };

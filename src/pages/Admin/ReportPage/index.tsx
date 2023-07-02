@@ -1,27 +1,35 @@
 import "./Report.scss";
-import DashboardLayout from "../../../layouts/Admin";
 import {
     setBreadcrumb,
     BreadcrumbItem,
 } from "../../../redux/reducers/Breadcrumb/Breadcrumb";
 import { useEffect, useState } from "react";
-import { AppDispatch } from "../../../redux/store";
+import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch } from "react-redux";
 import DropDown from "../../../components/DropDown";
 import type { DatePickerProps } from "antd";
 import { DatePicker, Space } from "antd";
-import CustomInput from "../../../components/input/CustomInput";
 import images from "../../../assests/images";
-import TruncateMarkup from "react-truncate-markup";
 import { Link } from "react-router-dom";
 import CustomPagination from "../../../components/Pagination";
+import { useSelector } from "react-redux";
+import { fetchNumber } from "../../../redux/reducers/number";
 
 function ReportPage() {
     const dispatch = useDispatch<AppDispatch>();
 
+    const { data, loading, error } = useSelector(
+        (state: RootState) => state.number
+    );
+
+    ////get data
+    useEffect(() => {
+        dispatch(fetchNumber());
+    }, [dispatch]);
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-    const data = [];
+    const dataPage = [];
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -40,87 +48,63 @@ function ReportPage() {
     };
 
     return (
-            <div className="wrapper-report">
-                <div className="report-filter">
-                    <div className="content-filter__item data-time-item">
-                        <p>Chọn thời thời gian</p>
-                        <div className="date-time">
-                            <DatePicker
-                                onChange={onChange}
-                                className="data-time__item"
-                            />
-                            <img
-                                src={images.arrow_right.default}
-                                alt=""
-                                style={{ padding: "0 10px" }}
-                            />
-                            <DatePicker
-                                onChange={onChange}
-                                className="data-time__item"
-                            />
-                        </div>
-                    </div>
-                    <div className="content-table">
-                        <table className="wrapper-table">
-                            <tr>
-                                <th>Mã dịch vụ</th>
-                                <th>Tên dịch vụ</th>
-                                <th>Mô tả</th>
-                                <th>Trạng thái hoạt động</th>
-                                
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <td>KIO.01</td>
-                                <td>Kiosk</td>
-                                <td>192.168.1.10</td>
-                                <td>
-                                    <img
-                                        src={images.stopAction.default}
-                                        alt=""
-                                    />
-                                    Ngưng hoạt động
-                                </td>
-                                <td>
-                                    <Link to="/service/serviceDetail">Chi tiết</Link>
-                                </td>
-                                <td>
-                                    <Link to="">Cập nhật</Link>
-                                </td>
-                            </tr>
-                            <tr className="even">
-                                <td>KIO.01</td>
-                                <td>Kiosk</td>
-                                <td>192.168.1.10</td>
-                                <td>
-                                    <img src={images.action.default} alt="" />
-                                    Hoạt động
-                                </td>
-                                <td>
-                                    <Link to="/service/serviceDetail">Chi tiết</Link>
-                                </td>
-                                <td>
-                                    <Link to="">Cập nhật</Link>
-                                </td>
-                            </tr>
-                            
-                        </table>
-
-                        <CustomPagination
-                            itemsPerPage={itemsPerPage}
-                            totalItems={1} //data.length
-                            onPageChange={handlePageChange}
+        <div className="wrapper-report">
+            <div className="report-filter">
+                <div className="content-filter__item data-time-item">
+                    <p>Chọn thời thời gian</p>
+                    <div className="date-time">
+                        <DatePicker
+                            onChange={onChange}
+                            className="data-time__item"
                         />
-
+                        <img
+                            src={images.arrow_right.default}
+                            alt=""
+                            style={{ padding: "0 10px" }}
+                        />
+                        <DatePicker
+                            onChange={onChange}
+                            className="data-time__item"
+                        />
                     </div>
-
-                    <Link to="/number/numberNew" className="button-add">
-                        <img src={images.download.default} alt="" /><br/>
-                        Cáp số mới
-                    </Link>
                 </div>
+                <div className="content-table">
+                    <table className="wrapper-table">
+                        <tr>
+                            <th>Số thứ tự</th>
+                            <th>Tên dịch vụ</th>
+                            <th>Thời gian cấp</th>
+                            <th>Tình trạng</th>
+                            <th>Nguồn cấp</th>
+                        </tr>
+                        {data.map((value, index) => (
+                            <tr key={index} className={index % 2 !== 0 ? 'even' : ''}>
+                                <td>{value.STT}</td>
+                                <td>{value.nameService}</td>
+                                <td>{value.time}</td>
+                                <td>
+                                    <img src={value.state === "Đang chờ"? images.waiting.default: value.state === "Bỏ qua" ? images.skip.default : images.used.default} alt="" />
+                                    {value.state}
+                                </td>
+                                <td>{value.source}</td>
+                            </tr>
+                        ))}
+                    </table>
+
+                    <CustomPagination
+                        itemsPerPage={itemsPerPage}
+                        totalItems={1} //data.length
+                        onPageChange={handlePageChange}
+                    />
+                </div>
+
+                <Link to="/number/numberNew" className="button-add" style={{top: "230px"}}>
+                    <img src={images.download.default} alt="" />
+                    <br />
+                    Cáp số mới
+                </Link>
             </div>
+        </div>
     );
 }
 

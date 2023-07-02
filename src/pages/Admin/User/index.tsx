@@ -1,7 +1,6 @@
 import "./User.scss";
-import DashboardLayout from "../../../layouts/Admin";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../redux/store";
+import { AppDispatch, RootState } from "../../../redux/store";
 import { useEffect, useState } from "react";
 import {
     setBreadcrumb,
@@ -10,9 +9,28 @@ import {
 import { Row, Col } from "antd";
 import images from "../../../assests/images";
 import CustomInput from "../../../components/input/CustomInput";
+import { useCookies } from 'react-cookie';
+
+
+
+interface User {
+    id: any;
+    userName: string;
+    password: string;
+    permission: string;
+    name: string,
+    phone: string,
+    role: string,
+    email: string
+}
 
 function User() {
     const dispatch = useDispatch<AppDispatch>();
+
+    const [userInfo, setUserInfo] = useState({} as  User)
+        const [cookies] = useCookies(['accessToken']);
+
+    const {name, avatar, email, phone, role, userName, password} = cookies.accessToken
 
     //breadcrum User page
     useEffect(() => {
@@ -25,12 +43,14 @@ function User() {
 
     return (
             <div className="wrapper-userInfo">
+                {
+                    cookies.accessToken && 
                 <Row style={{ gap: "24px" }}>
                     <Col span={6}>
                         <div className="userInfo-items">
                             <div className="userInfo-item__avatar">
                                 <img
-                                    src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                                    src={avatar}
                                     alt=""
                                 />
                                 <div className="userInfo-item__icon-camera">
@@ -38,7 +58,7 @@ function User() {
                                 </div>
                             </div>
                             <div className="userInfo-item__name">
-                                Nguyễn Minh Nghĩa
+                                {name}
                             </div>
                         </div>
                     </Col>
@@ -47,7 +67,7 @@ function User() {
                             <CustomInput
                                 type="disabled"
                                 label="Tên người dùng"
-                                disabledValue="Nguyễn Minh Nghĩa"
+                                disabledValue={name}
                                 style={{
                                     width: "100%",
                                     fontWeight: 400,
@@ -61,8 +81,8 @@ function User() {
                             />
                             <CustomInput
                                 type="disabled"
-                                label="Tên người dùng"
-                                disabledValue="Nguyễn Minh Nghĩa"
+                                label="Số điện thoại"
+                                disabledValue= {phone}
                                 style={{
                                     width: "100%",
                                     fontWeight: 400,
@@ -76,8 +96,8 @@ function User() {
                             />
                             <CustomInput
                                 type="disabled"
-                                label="Tên người dùng"
-                                disabledValue="Nguyễn Minh Nghĩa"
+                                label="Email:"
+                                disabledValue= {email}
                                 style={{
                                     width: "100%",
                                     fontWeight: 400,
@@ -94,10 +114,10 @@ function User() {
                     </Col>
                     <Col span={8}>
                         <div className="userInfo-input">
-                             <CustomInput
+                            <CustomInput
                                 type="disabled"
-                                label="Tên người dùng"
-                                disabledValue="Nguyễn Minh Nghĩa"
+                                label="Tên đăng nhập"
+                                disabledValue= {userName}
                                 style={{
                                     width: "100%",
                                     fontWeight: 400,
@@ -111,8 +131,8 @@ function User() {
                             />
                             <CustomInput
                                 type="disabled"
-                                label="Tên người dùng"
-                                disabledValue="Nguyễn Minh Nghĩa"
+                                label="Mật khẩu"
+                                disabledValue= {password}
                                 style={{
                                     width: "100%",
                                     fontWeight: 400,
@@ -126,8 +146,8 @@ function User() {
                             />
                             <CustomInput
                                 type="disabled"
-                                label="Tên người dùng"
-                                disabledValue="Nguyễn Minh Nghĩa"
+                                label="Vai trò"
+                                disabledValue= {role}
                                 style={{
                                     width: "100%",
                                     fontWeight: 400,
@@ -142,6 +162,7 @@ function User() {
                         </div>
                     </Col>
                 </Row>
+                }
             </div>
     );
 }

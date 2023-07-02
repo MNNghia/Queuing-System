@@ -3,23 +3,29 @@ import Input from "../../../components/input/CustomInput";
 import "./login.scss";
 import images from "../../../assests/images";
 import CustomButton from "../../../components/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
-import { fetchUsers } from "../../../redux/reducers/login/login";
 import { RootState, AppDispatch } from "../../../redux/store";
-
 import { useDispatch, useSelector } from "react-redux";
+import { useCookies } from 'react-cookie';
+import { fetchUsers } from "../../../redux/reducers/UserInfo";
 
 function Login() {
+    
     const [stateLogin, setStateLogin] = useState(true);
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [cookies, setCookie] = useCookies(['accessToken']);
+    
+
 
     const dispatch = useDispatch<AppDispatch>();
 
     const { data, loading, error } = useSelector(
-        (state: RootState) => state.users
+        (state: RootState) => state.usersInfo
     );
+
+
 
     ////get data
     useEffect(() => {
@@ -27,15 +33,19 @@ function Login() {
     }, [dispatch]);
 
     const LoginSubmit = () => {
-        const state = data.find(
-            (value) =>
-                value.userName === userName &&
+        data.find(
+            (value) => {
+                if( value.userName === userName &&
                 value.password === password &&
-                (window.location.href = "/dashboard")
-        );
-        if (!state) {
-            setStateLogin(false);
-        }
+                value.role === 'admin'){
+                        const accessToken = value
+                        setCookie('accessToken', accessToken, {path: '/'});
+                    (window.location.href = "/dashboard") 
+                } else {
+                    setStateLogin(false);
+                }
+            } )
+            // (window.location.href = "/settingSystem  
     };
 
     /////add data
@@ -132,6 +142,10 @@ function Login() {
                 </Col>
                 <Col className="login__img" span={14}>
                     <img src={images.group} alt="" />
+                    <div className="login__img-text">
+                        <p style={{fontWeight: 400, fontSize: '38px', lineHeight: '51px', color: '#FF7506'}}>Hệ thống</p>
+                        <p style={{color: '#FF7506', fontWeight: 900, fontSize: '42px', lineHeight: '70px', textTransform: "uppercase"}}>Quản lý xếp hàng</p>
+                    </div>
                 </Col>
             </Row>
         </div>

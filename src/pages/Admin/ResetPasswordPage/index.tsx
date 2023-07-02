@@ -12,7 +12,7 @@ function ResetPasswordPage() {
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
 
-    const checkEmail: any = () => {
+    const checkEmail = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(emailRegex.test(email)){
             setChangePassword(true)

@@ -44,6 +44,10 @@
             padding: 8px 0px;
             display: none;
             position: absolute;
+            max-height: 188px;
+            overflow-y: scroll;
+
+            
 
             &-item {
                 color: #282739;
@@ -53,6 +57,22 @@
                 padding: 10px 12px;
             }
         }
+
+        /* width */
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #fff;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #ffc89b;
+        border-radius: 5px;
+    }
     }
 
     &-content.active {

@@ -1,51 +1,53 @@
-import './Notification.scss'
+import { useEffect} from "react";
+import "./Notification.scss";
+import { useSelector } from "react-redux";
+import { fetchNoti } from "../../redux/reducers/notification";
+import { AppDispatch, RootState } from "../../redux/store";
+import { useDispatch } from "react-redux";
+
+interface Noti {
+    id: string;
+    name: string;
+    time: string;
+    date: string;
+}
+
 function Notification() {
-    return (  
+    const dispatch = useDispatch<AppDispatch>();
+
+    const { data, loading, error } = useSelector(
+        (state: RootState) => state.noti
+    );
+
+    console.log(data);
+
+    ////get data
+    useEffect(() => {
+        dispatch(fetchNoti());
+    }, [dispatch]);
+
+    
+
+    return (
         <div className="wrapper-notification">
             <div className="title">Thông báo</div>
-            <ul className="notification-items">
-                <li className="notification-item">
-                    <p className="user">Người dùng: Nguyễn Minh Nghĩa</p>
-                    <p className="date-time">Thời gian nhận số: 12h20 ngày 30/11/2021</p>
-                    <div className="horizontal-item"></div>
-                </li>
-                <li className="notification-item">
-                    <p className="user">Người dùng: Nguyễn Minh Nghĩa</p>
-                    <p className="date-time">Thời gian nhận số: 12h20 ngày 30/11/2021</p>
-                    <div className="horizontal-item"></div>
-                </li>
-                <li className="notification-item">
-                    <p className="user">Người dùng: Nguyễn Minh Nghĩa</p>
-                    <p className="date-time">Thời gian nhận số: 12h20 ngày 30/11/2021</p>
-                    <div className="horizontal-item"></div>
-                </li>
-                <li className="notification-item">
-                    <p className="user">Người dùng: Nguyễn Minh Nghĩa</p>
-                    <p className="date-time">Thời gian nhận số: 12h20 ngày 30/11/2021</p>
-                    <div className="horizontal-item"></div>
-                </li>
-                <li className="notification-item">
-                    <p className="user">Người dùng: Nguyễn Minh Nghĩa</p>
-                    <p className="date-time">Thời gian nhận số: 12h20 ngày 30/11/2021</p>
-                    <div className="horizontal-item"></div>
-                </li>
-                <li className="notification-item">
-                    <p className="user">Người dùng: Nguyễn Minh Nghĩa</p>
-                    <p className="date-time">Thời gian nhận số: 12h20 ngày 30/11/2021</p>
-                    <div className="horizontal-item"></div>
-                </li>
-                <li className="notification-item">
-                    <p className="user">Người dùng: Nguyễn Minh Nghĩa</p>
-                    <p className="date-time">Thời gian nhận số: 12h20 ngày 30/11/2021</p>
-                    <div className="horizontal-item"></div>
-                </li>
-                <li className="notification-item">
-                    <p className="user">Người dùng: Nguyễn Minh Nghĩa</p>
-                    <p className="date-time">Thời gian nhận số: 12h20 ngày 30/11/2021</p>
-                    <div className="horizontal-item"></div>
-                </li>
-                
-            </ul>
+            {data[0] && (
+                <ul className="notification-items">
+                    {
+                        data.map((value, index) =>
+                            <li className="notification-item" key={index}>
+                        <p className="user">Người dùng: {value.name}</p>
+                        <p className="date-time">
+                            Thời gian nhận số: {value.time} ngày {value.date} 
+                        </p>
+                        <div className="horizontal-item"></div>
+                    </li>
+                        )
+                    }
+                    
+    
+                </ul>
+            )}
         </div>
     );
 }
