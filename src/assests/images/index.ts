@@ -32,7 +32,18 @@ const images = {
     STT : require('./stt.svg'),
     userCall: require('./userCall.svg'),
     numberSkip: require('./numberSkip.svg'),
-    down: require('./down.svg')
+    down: require('./down.svg'),
+    nav_dashboardActive: require('./nav_dasboardActive.svg'),
+    monitorActive: require('./monitorActive.svg'),
+    serviceActive: require('./serviceActive.svg'),
+    numberActive: require('./numberActive.svg'),
+    reportActive: require('./reportActive.svg'),
+    settingActive: require('./settingActive.svg'),
+    overService: require('./overService.svg'),
+    overNumber: require('./overNumber.svg'),
+    stateServiceActive: require('./stateServiceActive.svg'),
+    stateNumberActive: require('./stateNumberActive.svg'),
+    stateSkipActive: require('./stateSkipActive.svg')
 
 
 };

@@ -3,7 +3,7 @@ import images from "../../assests/images";
 import { useEffect, useState } from "react";
 
 interface DropDownProps {
-    type: "stateActive" | "stateConnect" | "typeDevice" | 'service' | 'state' | 'source'|'serviceName' | 'role' | 'roleAdd' | 'stateActiveAdd';
+    type: "stateActive" | "stateConnect" | "typeDevice" | 'service' | 'state' | 'source'|'serviceName' | 'role' | 'roleAdd' | 'stateActiveAdd' | 'date';
     label: string;
     placeholder?: string;
     require?: boolean;
@@ -34,6 +34,7 @@ function DropDown({
     const role = ["Tất cả", "Kế toán", "Bác sĩ", "Lễ tân", "Quản lý", "Admin", "Superadmin"]
     const roleAdd = ["Kế toán", "Bác sĩ", "Lễ tân", "Quản lý", "Admin", "Superadmin"]
     const stateActiveAdd = [ "Hoạt động", "Ngưng hoạt động"]
+    const date = ['Ngày', 'Tuần', 'Tháng']
     var data;
 
 
@@ -64,6 +65,8 @@ function DropDown({
         data = roleAdd
     } else if( type === 'stateActiveAdd') {
         data = stateActiveAdd
+    } else if( type == 'date'){
+        data = date
     }
 
 
@@ -133,6 +136,9 @@ function DropDown({
                     }
                     {
                         type==='stateActiveAdd' && placeholder === undefined &&(data === stateActiveAdd && activeValue !== undefined && activeValue !== '' ? activeValue : stateActiveAdd[0])
+                    }
+                    {
+                        type==='date' && placeholder === undefined &&(data === date && activeValue !== undefined && activeValue !== '' ? activeValue : date[0])
                     }
                     {/* {<p style={{fontSize: '18px', color: "#A9A9B0", margin: "0"}}>placeholder</p>  || data?.[0]} */}
                     <img src={images.vector.default} alt="" />

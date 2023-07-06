@@ -58,7 +58,6 @@ export const addDevice = createAsyncThunk("device/addDevice", async (device: Dev
 });
 
 export const updateDevice = createAsyncThunk('device/updateDevice', async(device: Device) => {
-    console.log(device)
     try{
         const deviceDoc = doc(db, 'device', device.id)
         await setDoc(deviceDoc, device)

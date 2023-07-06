@@ -1,26 +1,82 @@
-import { Col, Row} from "antd";
+import { Col, Row } from "antd";
 import Input from "../../../components/input/CustomInput";
 import images from "../../../assests/images";
 import CustomButton from "../../../components/button";
 import "./resetPasswordPage.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../../redux/store";
+import { useSelector } from "react-redux";
+import { fetchUsers, updateUser } from "../../../redux/reducers/UserInfo";
+import { notification } from "antd";
+
+type NotificationType = "success" | "info" | "warning" | "error";
 
 function ResetPasswordPage() {
     const [email, setEmail] = useState("");
+    const [emailVali, setEmailVali] = useState(true);
     const [changePassword, setChangePassword] = useState(false);
+    const [user, setUser] = useState({} as any)
+
+    const [api, contextHolder] = notification.useNotification();
 
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
 
+    const dispatch = useDispatch<AppDispatch>();
+
+    const { data, loading, error } = useSelector(
+        (state: RootState) => state.usersInfo
+    );
+
+     ////get data
+    useEffect(() => {
+        dispatch(fetchUsers());
+    }, [dispatch]);
+
     const checkEmail = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if(emailRegex.test(email)){
-            setChangePassword(true)
+        const result = data.find((value) => value.email === email);
+        if (result && (emailRegex.test(email))) {
+                setUser(result)
+                setEmailVali(true)
+                setChangePassword(true);
+        } else {
+            setEmailVali(false);
+        }
+    };
+
+    const resetPassword = () => {
+        if(password === repeatPassword && password.length >= 6) {
+            setEmailVali(true)
+            dispatch(updateUser({...user, password: password, stateAction: ''}));
+            openNotification('success')
+            setPassword('')
+            setRepeatPassword('')
+        } else {
+            setEmailVali(false)
         }
     }
 
+    const key = "updatable";
+
+    const openNotification = (type: NotificationType) => {
+        if (type === "success") {
+            api.success({
+                key,
+                message: "Đặt lại mật khẩu thành công",
+            });
+        }
+    };
+
+    document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault(); // Ngăn chặn reload trang
+    }
+});
     return (
         <div className="wrapper-reset">
+            {contextHolder}
             <Row className="Row">
                 <Col
                     className="login__handle"
@@ -54,9 +110,25 @@ function ResetPasswordPage() {
                                     value={repeatPassword}
                                 />
 
+                                {emailVali ? (
+                                    ""
+                                ) : (
+                                    <p className="login__forgot-password ">
+                                        <i
+                                            className="fa-solid fa-circle-exclamation"
+                                            style={{
+                                                marginRight: "10px",
+                                                fontSize: "18px",
+                                            }}
+                                        ></i>
+                                        Password không trùng khớp hoặc ít hơn 6 kí tự
+                                    </p>
+                                )}
+
                                 <CustomButton
                                     text="Xác nhận"
                                     type="BtnDefault"
+                                    onClick={resetPassword}
                                 />
                             </form>
                         ) : (
@@ -74,11 +146,27 @@ function ResetPasswordPage() {
                                     }}
                                     value={email}
                                 />
+                                {emailVali ? (
+                                    ""
+                                ) : (
+                                    <p className="login__forgot-password ">
+                                        <i
+                                            className="fa-solid fa-circle-exclamation"
+                                            style={{
+                                                marginRight: "10px",
+                                                fontSize: "18px",
+                                            }}
+                                        ></i>
+                                        Email không hợp lệ
+                                    </p>
+                                )}
                                 <div className="resetPasswordBtn">
                                     <CustomButton
                                         text="Hủy"
                                         type="BtnOutline"
-                                        onClick={() => {window.history.back()}}
+                                        onClick={() => {
+                                            window.history.back();
+                                        }}
                                     />
                                     <CustomButton
                                         text="Tiếp tục"

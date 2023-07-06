@@ -119,7 +119,7 @@ function UpdateDevicePage() {
         if (type === "success") {
             api.success({
                 key,
-                message: "Cập thiết bị thành công",
+                message: "Cập nhật thiết bị thành công",
             });
         }
     };

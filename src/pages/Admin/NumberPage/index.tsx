@@ -33,10 +33,9 @@ function NumberPage() {
     const [searchResult, setSearchResult] = useState<any>();
     const [fill, setFill] = useState<any>({serviceName : "Tất cả", state: "Tất cả", source: "Tất cả" })
     const [fillresult, setFillresult] = useState<any>()
-    const itemsPerPage = 10;
-    const dataPage = [];
+    const [dataPage, setDataPage] = useState<any>()
+    const itemsPerPage = 9;
 
-    console.log(fillresult)
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -55,6 +54,18 @@ function NumberPage() {
         };
         handleSearch();
     }, [searchText, data]);
+
+    //Pagination
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const slicedData = data.slice(
+            startIndex,
+            endIndex)
+            setDataPage(slicedData)
+            
+    },[currentPage, data, searchResult])
+
 
     useEffect(() => {
         const breadcrumbItems: BreadcrumbItem[] = [
@@ -145,7 +156,7 @@ function NumberPage() {
                             <th>Nguồn cấp</th>
                             <th></th>
                         </tr>
-                        {data.map((value, index) => (
+                        {searchResult && searchResult.map((value: any, index: any) => (
                             <tr key={index}>
                                 <td>{value.STT}</td>
                                 <td>{value.nameClient}</td>
@@ -173,8 +184,9 @@ function NumberPage() {
 
                     <CustomPagination
                         itemsPerPage={itemsPerPage}
-                        totalItems={1} //data.length
+                        totalItems={data.length} //data.length
                         onPageChange={handlePageChange}
+                        // defaultCurrent={1}
                     />
                 </div>
 

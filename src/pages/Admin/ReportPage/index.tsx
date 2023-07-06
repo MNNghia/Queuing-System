@@ -98,10 +98,10 @@ function ReportPage() {
                     />
                 </div>
 
-                <Link to="/number/numberNew" className="button-add" style={{top: "230px"}}>
+                <Link to="" className="button-add" style={{top: "230px"}}>
                     <img src={images.download.default} alt="" />
                     <br />
-                    Cáp số mới
+                    Tải về
                 </Link>
             </div>
         </div>

@@ -57,6 +57,7 @@ export const addUser = createAsyncThunk("users/adduser", async (user: User) => {
 export const updateUser= createAsyncThunk('user/updateUser', async(user: User) => {
     try{
         const userDoc = doc(db, 'users', user.id)
+        console.log(userDoc)
         await setDoc(userDoc, user)
         return user 
     }

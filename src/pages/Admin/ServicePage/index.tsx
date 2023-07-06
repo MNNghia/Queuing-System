@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from "../../../redux/store";
 import { useDispatch } from "react-redux";
 import DropDown from "../../../components/DropDown";
 import type { DatePickerProps } from "antd";
-import { DatePicker } from "antd";
+import { DatePicker, Pagination } from "antd";
 import CustomInput from "../../../components/input/CustomInput";
 import images from "../../../assests/images";
 import { Link } from "react-router-dom";
@@ -30,34 +30,34 @@ function ServicePage() {
 
     const [searchText, setSearchText] = useState("");
     const [searchResult, setSearchResult] = useState<any>();
-    const[fillData, setFillData] = useState<any>({})
+    const[fillData, setFillData] = useState<any>({key: 'Tất cả'})
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
-    const dataPage = [];
+    const [dataPage, setDataPage] = useState<any>()
+    const itemsPerPage = 9;
 
-    const handlePageChange = (page: number) => {
+    const handlePageChange = (page: number, papeSize?: number) => {
         setCurrentPage(page);
     };
 
-    useEffect(() => {
-        if(fillData.key === 'Hoạt động'){
-            // const result = data.filter((value) => value.state ==== true)
-            // setFillData({...fillData, value : result})
-        } else if(fillData.key === 'Ngưng hoạt động'){
-            // const result = data.filter((value) => value.state ==== false)
-            // setFillData({...fillData, value : result})
-        } else {
-            setFillData({...fillData, value : data}) 
-        }
-    }, [data, fillData])
+    // useEffect(() => {
+    //     if(fillData.key === 'Hoạt động'){
+    //         const result = data.filter((value) => value.state ==== true)
+    //         setFillData({...fillData, value : result})
+    //     } else if(fillData.key === 'Ngưng hoạt động'){
+    //         const result = data.filter((value) => value.state ==== false)
+    //         setFillData({...fillData, value : result})
+    //     } else {
+    //         setFillData({...fillData, value : data}) 
+    //     }
+    // }, [data])
 
 
     useEffect(() => {
         const handleSearch = () => {
             // Thuật toán tìm kiếm chuỗi con Brute-Force
             const text = searchText.toLowerCase();
-            if(fillData.value){
-                const result = fillData.value.filter((value: any) =>
+            if(data){
+                const result = data.filter((value: any) =>
                     value.nameService.toLowerCase().includes(text)
                     )
                     setSearchResult(result);
@@ -66,6 +66,19 @@ function ServicePage() {
         };
         handleSearch();
     }, [searchText, data, fillData]);
+    console.log(searchResult)
+
+    //Pagination
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const slicedData = (searchResult && searchResult !== '' ? searchResult : data).slice(
+            startIndex,
+            endIndex)
+            setDataPage(slicedData)
+            console.log(slicedData)
+            
+    },[currentPage, data, fillData.value, searchResult])
 
     useEffect(() => {
         const breadcrumbItems: BreadcrumbItem[] = [
@@ -133,7 +146,7 @@ function ServicePage() {
                             <th></th>
                             <th></th>
                         </tr>
-                        {fillData.value && (searchResult ? searchResult : fillData.value).map((value: any, index: any) => (
+                        { dataPage && dataPage.map((value: any, index: any) => (
                             <tr key={index} className={index % 2 !== 0 ? "even": ""}>
                                 <td>{value.idService}</td>
                                 <td>{value.nameService}</td>
@@ -159,43 +172,12 @@ function ServicePage() {
                                 </td>
                             </tr>
                         ))}
-                        {/* <tr>
-                            <td>KIO.01</td>
-                            <td>Kiosk</td>
-                            <td>192.168.1.10</td>
-                            <td>
-                                <img src={images.stopAction.default} alt="" />
-                                Ngưng hoạt động
-                            </td>
-                            <td>
-                                <Link to="/service/serviceDetail">
-                                    Chi tiết
-                                </Link>
-                            </td>
-                            <td>
-                                <Link to="">Cập nhật</Link>
-                            </td>
-                        </tr> */}
-                        {/* <tr className="even">
-                                <td>KIO.01</td>
-                                <td>Kiosk</td>
-                                <td>192.168.1.10</td>
-                                <td>
-                                    <img src={images.action.default} alt="" />
-                                    Hoạt động
-                                </td>
-                                <td>
-                                    <Link to="/service/serviceDetail">Chi tiết</Link>
-                                </td>
-                                <td>
-                                    <Link to="">Cập nhật</Link>
-                                </td>
-                            </tr> */}
+
                     </table>
 
                     <CustomPagination
                         itemsPerPage={itemsPerPage}
-                        totalItems={1} //data.length
+                        totalItems={data.length} //data.length
                         onPageChange={handlePageChange}
                     />
                 </div>

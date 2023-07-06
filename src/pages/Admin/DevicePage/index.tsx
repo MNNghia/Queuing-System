@@ -21,8 +21,6 @@ function DevicePage() {
         (state: RootState) => state.device
     );
 
-    const reverseData = [...data].reverse();
-
     ////get data
     useEffect(() => {
         dispatch(fetchDevice());
@@ -32,8 +30,8 @@ function DevicePage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState("");
     const [searchResult, setSearchResult] = useState<any>();
-    const itemsPerPage = 10;
-    const dataPages = [];
+    const [dataPage, setDataPage] = useState<any>()
+    const itemsPerPage = 9;
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -54,15 +52,17 @@ function DevicePage() {
     }, [searchText, data]);
 
     //funtion render data in table
-    // const renderData = () => {
-    //     const startIndex = (currentPage - 1) * itemsPerPage;
-    //     const endIndex = startIndex + itemsPerPage;
-    //     const slicedData = data.slice(startIndex, endIndex);
 
-    //     return slicedData.map((item, index) => (
-    //         <tr key={index}>{/* Hiển thị dữ liệu trong bảng */}</tr>
-    //     ));
-    // };
+    //Pagination
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const slicedData = (searchResult ? searchResult : data).slice(
+            startIndex,
+            endIndex)
+            setDataPage(slicedData)
+            
+    },[currentPage, data, searchResult])
 
     const toggleTruncate = () => {
         setIsTruncated(!isTruncated);
@@ -111,7 +111,7 @@ function DevicePage() {
                             <th></th>
                             <th></th>
                         </tr>
-                        {(searchResult ? searchResult : reverseData).map(
+                        { dataPage && dataPage.map(
                             (value: any, index: any) => (
                                 <tr
                                     key={index}
@@ -183,127 +183,13 @@ function DevicePage() {
                                 </tr>
                             )
                         )}
-                        {/* <tr>
-                            <td>KIO.01</td>
-                            <td>Kiosk</td>
-                            <td>192.168.1.10</td>
-                            <td>
-                                <img src={images.stopAction.default} alt="" />
-                                Ngưng hoạt động
-                            </td>
-                            <td>
-                                <img src={images.stopAction.default} alt="" />
-                                Mất kết nối
-                            </td>
-                            <td
-                                onClick={toggleTruncate}
-                                className="viewMore-description"
-                            >
-                                {isTruncated ? (
-                                    <TruncateMarkup lines={1} ellipsis="...">
-                                        <p>
-                                            Lorem, ipsum dolor sit amet
-                                            consectetur adipisicing elit. Porro,
-                                            voluptatem assumenda excepturi alias
-                                            cupiditate iste quod ad. Ea
-                                            voluptatem dignissimos officia at
-                                            quaerat ad perferendis harum, maxime
-                                            iure aperiam consequatur.
-                                        </p>
-                                    </TruncateMarkup>
-                                ) : (
-                                    <p>
-                                        Lorem, ipsum dolor sit amet consectetur
-                                        adipisicing elit. Porro, voluptatem
-                                        assumenda excepturi alias cupiditate
-                                        iste quod ad. Ea voluptatem dignissimos
-                                        officia at quaerat ad perferendis harum,
-                                        maxime iure aperiam consequatur.
-                                    </p>
-                                )}
-                                {isTruncated && (
-                                    <div
-                                        className="viewMore"
-                                        onClick={toggleTruncate}
-                                    >
-                                        Xem thêm
-                                    </div>
-                                )}
-                            </td>
-                            <td>
-                                <Link to="/device/listDevice/detailDevice">
-                                    Chi tiết
-                                </Link>
-                            </td>
-                            <td>
-                                <Link to="">Cập nhật</Link>
-                            </td>
-                        </tr> */}
-                        {/* <tr className="even">
-                                <td>KIO.01</td>
-                                <td>Kiosk</td>
-                                <td>192.168.1.10</td>
-                                <td>
-                                    <img src={images.action.default} alt="" />
-                                    Hoạt động
-                                </td>
-                                <td>
-                                    <img src={images.action.default} alt="" />
-                                    Kết nối
-                                </td>
-                                <td
-                                    onClick={toggleTruncate}
-                                    className="viewMore-description"
-                                >
-                                    {isTruncated ? (
-                                        <TruncateMarkup
-                                            lines={1}
-                                            ellipsis="..."
-                                        >
-                                            <p>
-                                                Lorem, ipsum dolor sit amet
-                                                consectetur adipisicing elit.
-                                                Porro, voluptatem assumenda
-                                                excepturi alias cupiditate iste
-                                                quod ad. Ea voluptatem
-                                                dignissimos officia at quaerat
-                                                ad perferendis harum, maxime
-                                                iure aperiam consequatur.
-                                            </p>
-                                        </TruncateMarkup>
-                                    ) : (
-                                        <p>
-                                            Lorem, ipsum dolor sit amet
-                                            consectetur adipisicing elit. Porro,
-                                            voluptatem assumenda excepturi alias
-                                            cupiditate iste quod ad. Ea
-                                            voluptatem dignissimos officia at
-                                            quaerat ad perferendis harum, maxime
-                                            iure aperiam consequatur.
-                                        </p>
-                                    )}
-                                    {isTruncated && (
-                                        <div
-                                            className="viewMore"
-                                            onClick={toggleTruncate}
-                                        >
-                                            Xem thêm
-                                        </div>
-                                    )}
-                                </td>
-                                <td>
-                                    <Link to="/device/listDevice/detailDevice">Chi tiết</Link>
-                                </td>
-                                <td>
-                                    <Link to="">Cập nhật</Link>
-                                </td>
-                            </tr> */}
                     </table>
 
                     <CustomPagination
                         itemsPerPage={itemsPerPage}
-                        totalItems={1} //data.length
+                        totalItems={data.length} //data.length
                         onPageChange={handlePageChange}
+
                     />
                 </div>
 

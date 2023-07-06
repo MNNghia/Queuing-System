@@ -10,9 +10,10 @@ import CustomInput from "../../../components/input/CustomInput";
 import { Col, Row, Select } from "antd";
 import type { SelectProps } from "antd";
 import CustomButton from "../../../components/button";
-import { AppDispatch } from "../../../redux/store";
-import { addDevice } from "../../../redux/reducers/device";
+import { AppDispatch, RootState } from "../../../redux/store";
+import { addDevice, fetchDevice } from "../../../redux/reducers/device";
 import { notification } from "antd";
+import { useSelector } from "react-redux";
 
 const options: SelectProps["options"] = [];
 
@@ -37,6 +38,15 @@ function ManagerDevicePage() {
 
     const dispatch = useDispatch<AppDispatch>();
 
+    const { data, loading, error } = useSelector(
+        (state: RootState) => state.device
+    );
+
+    ////get data
+    useEffect(() => {
+        dispatch(fetchDevice());
+    }, [dispatch]);
+
     var typeNoti: NotificationType;
 
     if (
@@ -56,16 +66,15 @@ function ManagerDevicePage() {
         device.password === ""
     ) {
         typeNoti = "warning";
-    } else {
-        typeNoti = "success";
-    }
+    } 
 
     ///add data
     const handleAddDevice = (type: NotificationType) => {
         if (typeNoti === "success") {
             dispatch(addDevice(device));
-            setDevice({} as Device)
+            setDevice({} as Device);
         }
+
         openNotification(type);
     };
 
@@ -81,17 +90,23 @@ function ManagerDevicePage() {
     const key = "updatable";
 
     const openNotification = (type: NotificationType) => {
-        if(type === 'warning'){
+        if (type === "warning") {
             api.warning({
                 key,
                 message: "Trường dữ liệu bắt buộc không được để trống",
             });
         }
-        if(type === 'success') {
+        if (type === "success") {
             api.success({
                 key,
-                message: 'Thêm thiết bị thành công',
-            })
+                message: "Thêm thiết bị thành công",
+            });
+        }
+        if (type === "info") {
+            api.info({
+                key,
+                message: "Mã thiết bị đã tồn tại",
+            });
         }
     };
 

@@ -148,3 +148,14 @@ li {
     line-height: 24px;
     color: #282739;
 }
+
+
+.ant-pagination-item-active{
+    border-color: #ff9138 !important;
+    background-color: #ff9138 !important;
+
+    a{
+        color: #fff !important;
+
+    }
+}

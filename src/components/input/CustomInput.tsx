@@ -40,6 +40,7 @@ function CustomInput({
                     value={value}
                     onChange={onChange}
                     style={style}
+                     onPressEnter={() => {}}
                 />
             )}
             {type === "password" && (
@@ -50,6 +51,7 @@ function CustomInput({
                     onChange={onChange}
                     style={style}
                     value={value}
+                     onPressEnter={() => {}}
                 />
             )}
             {type === "email" && (
@@ -59,6 +61,7 @@ function CustomInput({
                     className="input-password"
                     autoComplete="off"
                     style={style}
+                     onPressEnter={() => {}}
                 />
             )}
             {type === "disabled" && (
@@ -66,6 +69,7 @@ function CustomInput({
                     disabled
                     style={style}
                     value={disabledValue}
+                     onPressEnter={() => {}}
                 />
             )}
             {type === "search" &&
@@ -73,6 +77,7 @@ function CustomInput({
                     <img src={images.search.default} alt=""/>
                 } className="input-search" placeholder={placeholder} 
                 onChange={onChange}
+                 onPressEnter={() => {}}
                 />
             }
         </div>

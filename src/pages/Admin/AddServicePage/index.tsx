@@ -58,6 +58,8 @@ function AddServicePage() {
         service.serviceDescription === ""
     ) {
         typeNoti = "warning";
+    } else if (data.find((value) => value.idService === service.idService)) {
+        typeNoti = "info";
     } else {
         typeNoti = "success";
     }
@@ -96,6 +98,12 @@ function AddServicePage() {
                 key,
                 message: 'Thêm thiết bị thành công',
             })
+        }
+        if (type === "info") {
+            api.info({
+                key,
+                message: "Mã thiết bị đã tồn tại",
+            });
         }
     };
 
