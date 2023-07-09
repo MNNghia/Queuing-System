@@ -34,7 +34,6 @@ function NumberNewPage() {
         (state: RootState) => state.number
     );
 
-    console.log(data)
 
     
     useEffect(() => {
@@ -64,7 +63,6 @@ function NumberNewPage() {
         const time = `${format(date, 'HH:mm')} - ${format(date, 'dd/MM/yy')}`
         const expiry = `${format(date, 'HH:mm')} - ${format(futureDate, 'dd/MM/yy')}`
         setNumber({...number, STT: STT, time: time, expiry: expiry, source: "Hệ thống", state: "Đang chờ",  nameClient: cookies.accessToken.name, nameService: value})
-    
     }
 
     return (

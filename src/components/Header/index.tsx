@@ -63,7 +63,7 @@ function Header() {
                 <Link to="/user" style={{ textDecoration: "none" }}>
                     <div className="header-items__user">
                         <img
-                            src="https://toigingiuvedep.vn/wp-content/uploads/2022/01/anh-meo-cute.jpg"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmEedEwy284CMHPcPoYXz8i9K1BkGpLyHRUo2IleoVqnEa9cVD3pgtZdu0AHVQUnTDqKY&usqp=CAU"
                             alt=""
                             className="user-avatar"
                         />

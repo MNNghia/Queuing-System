@@ -6,6 +6,7 @@ import { devicesReducer } from "./device";
 import { servicesReducer } from "./service";
 import { numbersReducer } from "./number";
 import { roleReducer } from "./role";
+import {diarysReducer} from './diary'
 
 export default combineReducers({
     usersInfo: usersInfoReducer ,
@@ -14,5 +15,6 @@ export default combineReducers({
     device: devicesReducer,
     service: servicesReducer,
     number: numbersReducer,
-    role: roleReducer
+    role: roleReducer,
+    diary: diarysReducer
 })

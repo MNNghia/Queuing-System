@@ -7,4 +7,16 @@
         justify-content: space-between;
         align-items: center;
     }
+
+    .date-time__label {
+            font-size: 16px;
+    line-height: 27px;
+    font-weight: 600;
+    color: #282739;
+    margin-bottom: 8px;
+    }
+
+    .data-time__item {
+        height: 46px;
+    }
 }

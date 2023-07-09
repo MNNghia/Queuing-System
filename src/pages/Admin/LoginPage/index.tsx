@@ -9,12 +9,25 @@ import { RootState, AppDispatch } from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 import { fetchUsers } from "../../../redux/reducers/UserInfo";
+import { addDays, format } from "date-fns";
+import { addDiary } from "../../../redux/reducers/diary";
+
+interface Diary{
+    userName: string,
+    IP: string,
+    handle: string,
+    time: string
+}
 
 function Login() {
     const [stateLogin, setStateLogin] = useState(true);
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [cookies, setCookie] = useCookies(["accessToken"]);
+    const [diary, setDiary] = useCookies(["Diary"]);
+    const [ipAddress, setIPAddress] = useState("");
+
+    
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -22,58 +35,72 @@ function Login() {
         (state: RootState) => state.usersInfo
     );
 
+    const { data: diaryData} = useSelector(
+        (state: RootState) => state.diary
+    );
+
+
+    useEffect(() => {
+        const getIPAddress = async () => {
+            try {
+                const response = await fetch(
+                    "https://api.ipify.org/?format=json"
+                );
+                const data = await response.json();
+                const ipAddress = data.ip;
+                setIPAddress(ipAddress);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        getIPAddress();
+    }, []);
+
     ////get data
     useEffect(() => {
         dispatch(fetchUsers());
     }, [dispatch]);
 
-    const LoginSubmit = () => {
+    const LoginSubmit =  async() => {
         const result = data.find(
-            (value) =>(
+            (value) =>
                 value.userName === userName &&
                 value.password === password &&
                 value.role === "admin"
-            )
         );
 
         if (result) {
-            const accessToken = {...result, stateActive: "Hoạt động"};
+            const accessToken = { ...result, stateActive: "Hoạt động" };
             setCookie("accessToken", accessToken, { path: "/" });
+
+            const date = new Date();
+            const time = `${format(date, "dd/MM/yy")}   ${format(
+                date,
+                "HH:mm:ss"
+            )}`;
+
+            setDiary(
+                "Diary",
+                { userName: result.userName, time: time, IP: ipAddress, handle: '' },
+                { path: "/" }
+            );
+
+            if(diary.Diary) {
+
+                await  dispatch(addDiary(diary.Diary as Diary))
+            }
+                
             window.location.href = "/dashboard";
         } else {
             setStateLogin(false);
         }
-        // (window.location.href = "/settingSystem
+
     };
 
-    document.addEventListener('keydown', (e) => {
-        if(e.key === "Enter")
-        LoginSubmit()
-    })
-
-    /////add data
-    // const handleAddUser = () => {
-    //     const userName = prompt("Enter user name")
-    //     const email = promt("enter user email")
-    //     if(userName && email) {
-    //         dispatch(adduser({name, email}))
-    //     }
-    // }
-
-    ////delete data
-    // const handleDeleteUser = (userId: string) => {
-    //     if(window.confirm('Are you sure you wnat todelete this user?')) {
-    //         dispatch(delete(userId))
-    //     }
-    // }
-
-    // if(loading) {
-    //     return <div>Loading...</div>
-    // }
-
-    // if(error) {
-    //     return <div>Error: {error}</div>
-    // }
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") LoginSubmit();
+    });
 
     return (
         <div className="wrapper">

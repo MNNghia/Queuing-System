@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import CustomPagination from "../../../components/Pagination";
 import { useSelector } from "react-redux";
 import { fetchService } from "../../../redux/reducers/service";
+import { set } from "date-fns";
 
 function ServicePage() {
     const dispatch = useDispatch<AppDispatch>();
@@ -30,55 +31,61 @@ function ServicePage() {
 
     const [searchText, setSearchText] = useState("");
     const [searchResult, setSearchResult] = useState<any>();
-    const[fillData, setFillData] = useState<any>({key: 'Tất cả'})
+    const [fillData, setFillData] = useState<any>('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [dataPage, setDataPage] = useState<any>()
+    const [dataPage, setDataPage] = useState<any>();
     const itemsPerPage = 9;
 
     const handlePageChange = (page: number, papeSize?: number) => {
         setCurrentPage(page);
     };
 
-    // useEffect(() => {
-    //     if(fillData.key === 'Hoạt động'){
-    //         const result = data.filter((value) => value.state ==== true)
-    //         setFillData({...fillData, value : result})
-    //     } else if(fillData.key === 'Ngưng hoạt động'){
-    //         const result = data.filter((value) => value.state ==== false)
-    //         setFillData({...fillData, value : result})
-    //     } else {
-    //         setFillData({...fillData, value : data}) 
-    //     }
-    // }, [data])
-
 
     useEffect(() => {
         const handleSearch = () => {
+            let result;
+            if (fillData === "Hoạt động") {
+                result = data.filter(
+                    (value: any) => value.stateAction === "Hoạt động"
+                );
+                
+            } else if (fillData === "Ngưng hoạt động") {
+                result = data.filter(
+                    (value: any) => value.stateAction === "Ngưng hoạt động"
+                );
+            } else {
+                result = [...data]
+            }
             // Thuật toán tìm kiếm chuỗi con Brute-Force
             const text = searchText.toLowerCase();
-            if(data){
-                const result = data.filter((value: any) =>
+            
+            if (text !== undefined || text !== "") {
+                result = result.filter((value: any) =>
                     value.nameService.toLowerCase().includes(text)
-                    )
-                    setSearchResult(result);
+                );
             }
 
+            if (result) {
+                result.sort(function (a: any, b: any) {
+                    return +a.idService - +b.idService;
+                });
+            }
+
+            setSearchResult(result)
         };
         handleSearch();
     }, [searchText, data, fillData]);
-    console.log(searchResult)
+
 
     //Pagination
     useEffect(() => {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const slicedData = (searchResult && searchResult !== '' ? searchResult : data).slice(
-            startIndex,
-            endIndex)
-            setDataPage(slicedData)
-            console.log(slicedData)
-            
-    },[currentPage, data, fillData.value, searchResult])
+        if (searchResult) {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const slicedData = searchResult.slice(startIndex, endIndex);
+            setDataPage(slicedData);
+        }
+    }, [currentPage, data, searchResult]);
 
     useEffect(() => {
         const breadcrumbItems: BreadcrumbItem[] = [
@@ -97,11 +104,16 @@ function ServicePage() {
             <div className="title">Quản lý dịch vụ</div>
             <div className="wrapper-service-content">
                 <div className="service-content__filter-items">
-                    <div className="service-content__filter-item" style={{width: '300px'}}>
+                    <div
+                        className="service-content__filter-item"
+                        style={{ width: "300px" }}
+                    >
                         <DropDown
                             type="stateActive"
                             label="Trạng thái hoạt động"
-                            onClick={(value: any) => setFillData({...fillData, key : value})}
+                            onClick={(value: any) =>
+                                setFillData(value )
+                            }
                         />
                     </div>
 
@@ -131,12 +143,14 @@ function ServicePage() {
                             onChange={(e) => {
                                 setSearchText(e.target.value);
                             }}
+                            
                         />
                     </div>
                 </div>
 
                 <div className="service-content__table">
                     <table className="wrapper-table">
+                        <tbody>
                         <tr>
                             <th>Mã dịch vụ</th>
                             <th>Tên dịch vụ</th>
@@ -146,33 +160,48 @@ function ServicePage() {
                             <th></th>
                             <th></th>
                         </tr>
-                        { dataPage && dataPage.map((value: any, index: any) => (
-                            <tr key={index} className={index % 2 !== 0 ? "even": ""}>
-                                <td>{value.idService}</td>
-                                <td>{value.nameService}</td>
-                                <td>{value.serviceDescription}</td>
-                                <td>
-                                    <img
-                                        src={images.stopAction.default}
-                                        alt=""
-                                    />
-                                    Ngưng hoạt động
-                                </td>
-                                <td>
-                                    <Link to="/service/serviceDetail">
-                                        Chi tiết
-                                    </Link>
-                                </td>
-                                <td>
-                                    <Link to={{
+                        {dataPage &&
+                            dataPage.map((value: any, index: any) => (
+                                <tr
+                                    key={index}
+                                    className={index % 2 !== 0 ? "even" : ""}
+                                >
+                                    <td>{value.idService}</td>
+                                    <td>{value.nameService}</td>
+                                    <td>{value.serviceDescription}</td>
+                                    <td>
+                                        <img
+                                            src={images.stopAction.default}
+                                            alt=""
+                                        />
+                                        {value.stateAction}
+                                    </td>
+                                    <td>
+                                        <Link 
+
+                                        to={{
+                                                pathname:
+                                                    "/service/serviceDetail",
+                                                search: `serviceId=${value.id}`,
+                                            }}
+                                        >
+                                            Chi tiết
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link
+                                            to={{
                                                 pathname:
                                                     "/service/listService/updateService",
                                                 search: `ServiceId=${value.id}`,
-                                            }}>Cập nhật</Link>
-                                </td>
-                            </tr>
-                        ))}
-
+                                            }}
+                                        >
+                                            Cập nhật
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
                     </table>
 
                     <CustomPagination
@@ -185,7 +214,7 @@ function ServicePage() {
                 <Link to="/service/addService" className="button-add">
                     <img src={images.add.default} alt="" />
                     <br />
-                    Thêm thiết bị
+                    Thêm dịch vụ
                 </Link>
             </div>
         </div>

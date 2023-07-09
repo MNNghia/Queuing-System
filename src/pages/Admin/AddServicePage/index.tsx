@@ -16,7 +16,7 @@ const { TextArea } = Input;
 
 interface Service {
     nameService: string,
-    // stateAction?: boolean,
+    stateAction?: string,
     serviceDescription: string,
     idService: string,
 }
@@ -24,9 +24,10 @@ interface Service {
 type NotificationType = "success" | "info" | "warning" | "error";
 
 function AddServicePage() {
-    const [service, setService] = useState({} as Service)
+    const [service, setService] = useState({stateAction: 'Ngưng hoạt động'} as Service)
 
     const [api, contextHolder] = notification.useNotification();
+
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -169,6 +170,7 @@ function AddServicePage() {
                                         name=""
                                         id="a"
                                         className="inputCheckbox"
+                                        checked = {true}
                                     />
                                     <label
                                         className="checkbox-option-item_label"
@@ -179,11 +181,11 @@ function AddServicePage() {
                                 </td>
                                 <td>
                                     <div className="checkbox-option-item__input">
-                                        <Input />
+                                        <Input value="000" />
                                         <span className="checkbox-option-item_label">
                                             đến
                                         </span>
-                                        <Input />
+                                        <Input  value="999"/>
                                     </div>
                                 </td>
                             </tr>

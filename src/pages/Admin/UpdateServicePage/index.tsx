@@ -11,6 +11,7 @@ import { Input } from "antd";
 import { notification } from "antd";
 import { addService, fetchService, updateService } from "../../../redux/reducers/service";
 import { useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
 const { TextArea } = Input;
 
 interface Service {
@@ -24,6 +25,8 @@ type NotificationType = "success" | "info" | "warning" | "error";
 
 function UpdateServicePage() {
     const [service, setService] = useState({} as Service)
+    const [diary, setDiary] = useCookies<any>(["Diary"]);
+
 
     const [api, contextHolder] = notification.useNotification();
 
@@ -67,6 +70,8 @@ function UpdateServicePage() {
     const handleUpdate = (type: NotificationType) => {
         if (typeNoti === "success") {
             dispatch(updateService(service))
+            const updateHandle = diary.Diary.handle + ",Cập nhật thông thông tin dịch vụ"
+            setDiary("Diary", {...diary.Diary, handle: updateHandle})
         }
         openNotification(type);
     };
@@ -162,6 +167,7 @@ function UpdateServicePage() {
                                         name=""
                                         id="a"
                                         className="inputCheckbox"
+                                        checked
                                     />
                                     <label
                                         className="checkbox-option-item_label"
@@ -172,11 +178,11 @@ function UpdateServicePage() {
                                 </td>
                                 <td>
                                     <div className="checkbox-option-item__input">
-                                        <Input />
+                                        <Input value="000" />
                                         <span className="checkbox-option-item_label">
                                             đến
                                         </span>
-                                        <Input />
+                                        <Input value="999" />
                                     </div>
                                 </td>
                             </tr>

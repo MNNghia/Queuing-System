@@ -7,7 +7,7 @@ const usersCollectionRef = collection(db, "service");
 interface Service {
     id?: any;
     nameService: string,
-    // stateAction?: boolean,
+    stateAction?: string,
     serviceDescription: string,
     idService: string
 }
@@ -33,8 +33,8 @@ export const fetchService = createAsyncThunk("services/fetchService", async () =
         id: doc.id,
         nameService: doc.data().nameService,
         serviceDescription: doc.data().serviceDescription,
-        idService: doc.data().idService
-        // stateAction: doc.data().stateAction,
+        idService: doc.data().idService,
+        stateAction: doc.data().stateAction,
     }));
 
     return filteredData;

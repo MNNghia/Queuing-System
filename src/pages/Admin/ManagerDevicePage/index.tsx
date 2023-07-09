@@ -15,6 +15,7 @@ import { addDevice, fetchDevice } from "../../../redux/reducers/device";
 import { notification } from "antd";
 import { useSelector } from "react-redux";
 
+
 const options: SelectProps["options"] = [];
 
 interface Device {
@@ -32,7 +33,8 @@ interface Device {
 type NotificationType = "success" | "info" | "warning" | "error";
 
 function ManagerDevicePage() {
-    const [device, setDevice] = useState({} as Device);
+    const [device, setDevice] = useState({ stateAction: false} as Device);
+
 
     const [api, contextHolder] = notification.useNotification();
 
@@ -66,7 +68,11 @@ function ManagerDevicePage() {
         device.password === ""
     ) {
         typeNoti = "warning";
-    } 
+    } else if(data.find((value: any) => value.idDevice === device.idDevice)){
+        typeNoti = 'info'
+    } else {
+        typeNoti = 'success'
+    }
 
     ///add data
     const handleAddDevice = (type: NotificationType) => {
@@ -240,11 +246,22 @@ function ManagerDevicePage() {
                                     setDevice({ ...device, service: value })
                                 }
                                 options={[
-                                    {
-                                        value: "1",
-                                        label: "1 sdf sdf sfsdfsfsdf",
-                                    },
-                                    { value: "2", label: "2" },
+                                        {
+                                            value: "Khám tim mạch",
+                                            label: "Khám tim mạch",
+                                        },
+                                        {
+                                            value: " Khám sản - Phụ khoa",
+                                            label: " Khám sản - Phụ khoa",
+                                        },
+                                        {
+                                            value: " Khám răng hàm mặt",
+                                            label: " Khám răng hàm mặt",
+                                        },
+                                        {
+                                            value: "Khám tai mũi họng",
+                                            label: " Khám tai mũi họng",
+                                        }
                                 ]}
                             />
                         </Col>

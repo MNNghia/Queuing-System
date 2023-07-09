@@ -5,19 +5,52 @@ import {
     BreadcrumbItem,
 } from "../../../redux/reducers/Breadcrumb/Breadcrumb";
 import { useEffect, useState } from "react";
-import { AppDispatch } from "../../../redux/store";
+import { AppDispatch, RootState } from "../../../redux/store";
 import images from "../../../assests/images";
 import DoughnutChart from "../../../components/Chart/Doughnut";
 import LineChart from "../../../components/Chart/LineChart";
 import DropDown from "../../../components/DropDown";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { useSelector } from "react-redux";
+import { fetchDevice } from "../../../redux/reducers/device";
+import { fetchNumber } from "../../../redux/reducers/number";
+import { fetchService } from "../../../redux/reducers/service";
+
+
 
 
 function DashBoardPage() {
     const dispatch = useDispatch<AppDispatch>();
 
-    const [value, onChange] = useState<any>(new Date());
+    const [value, onChange] = useState<any>(new Date())
+
+    const { data: dataDevice} = useSelector(
+        (state: RootState) => state.device
+    );
+
+    const { data: dataService} = useSelector(
+        (state: RootState) => state.service
+    );
+
+    const { data: dataNumber} = useSelector(
+        (state: RootState) => state.number
+    );
+
+    ////get data
+    useEffect(() => {
+        dispatch(fetchDevice());
+    }, [dispatch]);
+
+    ////get data
+    useEffect(() => {
+        dispatch(fetchNumber());
+    }, [dispatch]);
+
+    ////get data
+    useEffect(() => {
+        dispatch(fetchService())
+    }, [dispatch])
 
     useEffect(() => {
         const breadcrumbItems: BreadcrumbItem[] = [
@@ -38,7 +71,7 @@ function DashBoardPage() {
                         </div>
                         <div className="dashboard-content-item__index">
                             <span className="dashboard-content-item__index-total">
-                                4.221
+                                {dataNumber.length}
                             </span>
                             <span className="dashboard-content-item__index-grow">
                                 <img src={images.grow.default} alt="" />
@@ -54,7 +87,7 @@ function DashBoardPage() {
                         </div>
                         <div className="dashboard-content-item__index">
                             <span className="dashboard-content-item__index-total">
-                                4.221
+                                {dataNumber.filter((value) => value.state === "Đã sử dụng").length}
                             </span>
                             <span className="dashboard-content-item__index-grow">
                                 <img src={images.down.default} alt="" />
@@ -66,11 +99,11 @@ function DashBoardPage() {
                     <div className="dashboard-content-item">
                         <div className="dashboard-content-item__heading">
                             <img src={images.userCall.default} alt="" />
-                            Số thứ tự đã cấp
+                            Số thứ tự đang chờ
                         </div>
                         <div className="dashboard-content-item__index">
                             <span className="dashboard-content-item__index-total">
-                                4.221
+                                {dataNumber.filter((value) => value.state === "Đang chờ").length}
                             </span>
                             <span className="dashboard-content-item__index-grow">
                                 <img src={images.grow.default} alt="" />
@@ -86,7 +119,7 @@ function DashBoardPage() {
                         </div>
                         <div className="dashboard-content-item__index">
                             <span className="dashboard-content-item__index-total">
-                                4.221
+                                {dataNumber.filter((value) => value.state === "Bỏ qua").length}
                             </span>
                             <span className="dashboard-content-item__index-grow">
                                 <img src={images.grow.default} alt="" />
@@ -125,7 +158,7 @@ function DashBoardPage() {
                         </div>
 
                         <div className="total-device">
-                            <div className="total-device__number">4.221</div>
+                            <div className="total-device__number">{dataDevice.length}</div>
                             <div className="total-device__type-device">
                                 <img src={images.monitor.default} alt="" />
                                 Thiết bị 
@@ -137,24 +170,24 @@ function DashBoardPage() {
                                 <img src={images.stateActive.default} alt="" />
                                 <div style={{width: '120px'}}>Đang hoạt động</div>
                                 
-                                <span style={{color: '#FF7506'}}>3.799</span>
+                                <span style={{color: '#FF7506'}}>{dataDevice.filter((value) => value.stateAction === true).length}</span>
                             </div>
                             <div className="device-state__stop">
                                 <img src={images.stateStop.default} alt="" />
                                 <div style={{width: '120px'}}>Ngừng hoạt động</div>
                                 
-                                <span style={{color: '#FF7506'}}>422</span>
+                                <span style={{color: '#FF7506'}}>{dataDevice.filter((value) => value.stateAction === false).length}</span>
                             </div>
                         </div>
                     </div>
 
                     <div className="overview-percent__item">
                         <div className="percent-item">
-                            <DoughnutChart a={10} b={20}/>
+                            <DoughnutChart a={dataService.filter((value) => value.stateAction === "Đang hoạt động").length} b={dataService.filter((value) => value.stateAction === "Ngưng hoạt động").length}/>
                         </div>
 
                         <div className="total-device">
-                            <div className="total-device__number">4.221</div>
+                            <div className="total-device__number">{dataService.length}</div>
                             <div className="total-device__type-device" style={{color: '#4277FF'}}>
                                 <img src={images.overService.default} alt="" />
                                 Dịch vụ
@@ -166,24 +199,24 @@ function DashBoardPage() {
                                 <img src={images.stateServiceActive.default} alt="" />
                                 <div style={{width: '120px'}}>Đang hoạt động</div>
                                 
-                                <span style={{color: '#4277FF'}}>3.799</span>
+                                <span style={{color: '#4277FF'}}>{dataService.filter((value) => value.stateAction === "Đang hoạt động").length}</span>
                             </div>
                             <div className="device-state__stop">
                                 <img src={images.stateStop.default} alt="" />
                                 <div style={{width: '120px'}}>Ngừng hoạt động</div>
                                 
-                                <span style={{color: '#4277FF'}}>422</span>
+                                <span style={{color: '#4277FF'}}>{dataService.filter((value) => value.stateAction === "Ngưng hoạt động").length}</span>
                             </div>
                         </div>
                     </div>
 
                     <div className="overview-percent__item">
                         <div className="percent-item">
-                            <DoughnutChart a={10} b={20}/>
+                            <DoughnutChart a={dataNumber.filter((value) => value.state === "Đang chờ").length} b={dataNumber.filter((value) => value.state === "Đã sử dụng").length} c ={dataNumber.filter((value) => value.state === "Bỏ qua").length}/>
                         </div>
 
                         <div className="total-device">
-                            <div className="total-device__number">4.221</div>
+                            <div className="total-device__number">{dataNumber.length}</div>
                             <div className="total-device__type-device" style={{color: '#35C75A'}}>
                                 <img src={images.overNumber.default} alt="" />
                                 Cấp số
@@ -195,19 +228,19 @@ function DashBoardPage() {
                                 <img src={images.stateNumberActive.default} alt="" />
                                 <div style={{width: '120px'}}>Đang chờ</div>
                                 
-                                <span style={{color: '#35C75A'}}>3.799</span>
+                                <span style={{color: '#35C75A'}}>{dataNumber.filter((value) => value.state === "Đang chờ").length}</span>
                             </div>
                             <div className="device-state__stop" style={{marginBottom: '7px'}}>
                                 <img src={images.stateStop.default} alt="" />
                                 <div style={{width: '120px'}}>Đã sử dụng</div>
                                 
-                                <span style={{color: '#35C75A'}}>422</span>
+                                <span style={{color: '#35C75A'}}>{dataNumber.filter((value) => value.state === "Đã sử dụng").length}</span>
                             </div>
                             <div className="device-state__stop">
                                 <img src={images.stateSkipActive.default} alt="" />
                                 <div style={{width: '120px'}}>Bỏ qua</div>
                                 
-                                <span style={{color: '#35C75A'}}>422</span>
+                                <span style={{color: '#35C75A'}}>{dataNumber.filter((value) => value.state === "Bỏ qua").length}</span>
                             </div>
                         </div>
                     </div>

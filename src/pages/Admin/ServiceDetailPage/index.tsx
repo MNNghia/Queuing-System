@@ -1,26 +1,36 @@
 import "./ServiceDetail.scss";
-import DashboardLayout from "../../../layouts/Admin";
 import {
     setBreadcrumb,
     BreadcrumbItem,
 } from "../../../redux/reducers/Breadcrumb/Breadcrumb";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../redux/store";
-import CustomButton from "../../../components/button";
+import { AppDispatch, RootState } from "../../../redux/store";
 import { DatePicker, DatePickerProps, Input } from "antd";
-import DropDown from "../../../components/DropDown";
 import CustomInput from "../../../components/input/CustomInput";
 import images from "../../../assests/images";
 import { Link } from "react-router-dom";
 import CustomPagination from "../../../components/Pagination";
+import { useSelector } from "react-redux";
+import { fetchService } from "../../../redux/reducers/service";
 
 function ServiceDetailPage() {
     const dispatch = useDispatch<AppDispatch>();
+    const { data, loading, error } = useSelector(
+        (state: RootState) => state.service
+    );
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceId = urlParams.get("serviceId");
+
+    ////get data
+    useEffect(() => {
+        dispatch(fetchService());
+    }, [dispatch]);
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-    const data = [];
+    const dataPage = [];
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -48,22 +58,31 @@ function ServiceDetailPage() {
                             <div className="title" style={{ fontSize: "20px" }}>
                                 Thông tin dịch vụ
                             </div>
-                            <table>
+                            {
+                                    data.map((value, index) => {
+                                        if(value.id === serviceId)
+                                        {
+                                            return <table>
+                                
                                 <tr>
                                     <td className="key">Mã dịch vụ: </td>
-                                    <td className="value">201</td>
+                                    <td className="value">{value.idService}</td>
                                 </tr>
                                 <tr>
                                     <td className="key">Tên dịch vụ:</td>
-                                    <td className="value">Khám tim mạch</td>
+                                    <td className="value">{value.nameService}</td>
                                 </tr>
                                 <tr>
                                     <td className="key">Mô tả:</td>
                                     <td className="value">
-                                        Chuyên các bệnh lý về tim
+                                        {value.serviceDescription}
                                     </td>
                                 </tr>
                             </table>
+                                        }
+                                    })
+                                }
+                            
                         </div>
 
                         <div className="service-item-info">
@@ -75,11 +94,11 @@ function ServiceDetailPage() {
                                     <td className="key">Tăng tự động:</td>
                                     <td className="value ">
                                         <div className="checkbox-option-item__input">
-                                            <Input />
+                                            <Input value="000" />
                                             <span className="checkbox-option-item_label">
                                                 đến
                                             </span>
-                                            <Input />
+                                            <Input value="999"/>
                                         </div>
                                     </td>
                                 </tr>

@@ -46,9 +46,15 @@ function NumberPage() {
             // Thuật toán tìm kiếm chuỗi con Brute-Force
             const text = searchText.toLowerCase();
 
-            const result = data.filter((value) =>
+            let result = data.filter((value) =>
                 value.nameClient.toLowerCase().includes(text)
             );
+
+            if (result) {
+                result.sort(function (a: any, b: any) {
+                    return +a.STT - +b.STT;
+                });
+            }
 
             setSearchResult(result);
         };
@@ -57,14 +63,17 @@ function NumberPage() {
 
     //Pagination
     useEffect(() => {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const slicedData = data.slice(
-            startIndex,
-            endIndex)
-            setDataPage(slicedData)
+        if(searchResult){
             
-    },[currentPage, data, searchResult])
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const slicedData = searchResult.slice(
+                startIndex,
+                endIndex)
+                setDataPage(slicedData)
+        }
+            
+    },[currentPage,  searchResult])
 
 
     useEffect(() => {
@@ -115,7 +124,7 @@ function NumberPage() {
                     </div>
 
                     <div className="content-filter__item data-time-item">
-                        <p>Chọn thời thời gian</p>
+                        <p className="date-time__label">Chọn thời thời gian</p>
                         <div className="date-time">
                             <DatePicker
                                 onChange={onChange}
@@ -124,7 +133,7 @@ function NumberPage() {
                             <img
                                 src={images.arrow_right.default}
                                 alt=""
-                                style={{ padding: "0 10px" }}
+                                style={{padding: " 0px 10px"}}
                             />
                             <DatePicker
                                 onChange={onChange}
@@ -133,7 +142,7 @@ function NumberPage() {
                         </div>
                     </div>
 
-                    <div className="content-filter__item">
+                    <div className="content-filter__item" style={{ position: 'relative', bottom: '-15px' }}> 
                         <CustomInput
                             type="search"
                             label="Từ khóa"
@@ -141,6 +150,8 @@ function NumberPage() {
                             onChange={(e) => {
                                 setSearchText(e.target.value);
                             }}
+                            
+                            
                         />
                     </div>
                 </div>
@@ -156,7 +167,7 @@ function NumberPage() {
                             <th>Nguồn cấp</th>
                             <th></th>
                         </tr>
-                        {searchResult && searchResult.map((value: any, index: any) => (
+                        {dataPage && dataPage.map((value: any, index: any) => (
                             <tr key={index}>
                                 <td>{value.STT}</td>
                                 <td>{value.nameClient}</td>

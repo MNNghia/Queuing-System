@@ -19,7 +19,7 @@ import AccountManagePage from "./pages/Admin/AccountManagePage";
 import AddAccountPage from "./pages/Admin/AddAccountPage";
 import DiaryActionPage from "./pages/Admin/DiaryActionPage";
 import AdminLayout from "./layouts/Admin";
-import SelectViewPage from "./pages/SettingSystem/SelectViewPage";
+import UserPage from "./pages/User";
 import UpdateDevicePage from "./pages/Admin/UpdateDevicePage";
 import UpdateServicePage from "./pages/Admin/UpdateServicePage";
 import NumberDetailPage from "./pages/Admin/numberDetailpage";
@@ -31,10 +31,10 @@ function App() {
     return (
         <div className="App">
             {
-                window.location.pathname === "/" || window.location.pathname === "/resetPassword" || window.location.pathname === "/settingSystem" ? <Routes>
-                <Route index path="/" element={<Login />} />
+                window.location.pathname === "/login" || window.location.pathname === "/resetPassword" || window.location.pathname === "/" ? <Routes>
+                <Route  path="/login" element={<Login />} />
                 <Route path="/resetPassword" element={<ResetPasswordPage />} />
-                <Route path="/settingSystem" element={<SelectViewPage/>} />
+                <Route index path="/" element={<UserPage/>} />
             </Routes> : 
                     <AdminLayout>
                 <Routes>

@@ -10,13 +10,15 @@ import {
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Filler);
 function LineChart() {
+
+
     const data = {
         labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
         datasets: [
             {
                 data: [
-                    2600, 4100, 4500, 3200, 3500, 3433, 3700, 4100, 3800, 3900,
-                    4500, 3700,
+                    2.6, 7.1, 4.5, 5.2, 3.5, 8.4, 5.7, 4.1, 3.7, 6.9,
+                    4.5, 3.7,
                 ],
                 backgroundColor: function (context: any) {
                     const gradient = context.chart.ctx.createLinearGradient(
@@ -49,9 +51,9 @@ function LineChart() {
             },
             y: {
                 min: 0,
-                max: 6000,
+                max: 10,
                 ticks: {
-                    stepSize: 1000,
+                    stepSize: 2,
                     callback: (value: any) => value,
                 },
             },

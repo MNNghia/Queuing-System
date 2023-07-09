@@ -50,7 +50,7 @@ function User() {
                         <div className="userInfo-items">
                             <div className="userInfo-item__avatar">
                                 <img
-                                    src={avatar}
+                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmEedEwy284CMHPcPoYXz8i9K1BkGpLyHRUo2IleoVqnEa9cVD3pgtZdu0AHVQUnTDqKY&usqp=CAU"
                                     alt=""
                                 />
                                 <div className="userInfo-item__icon-camera">

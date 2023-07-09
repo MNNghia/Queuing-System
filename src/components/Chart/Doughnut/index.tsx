@@ -4,18 +4,19 @@ import { Doughnut} from "react-chartjs-2";
 
 type DoughnutChartProps = {
     a: number,
-    b: number
+    b: number,
+    c?: number
 }
 
 ChartJS.register(ArcElement);
 
-const DoughnutChart = ({a, b}: DoughnutChartProps) => {
+const DoughnutChart = ({a, b, c}: DoughnutChartProps) => {
     const data = {
         labels: ["Red"],
         datasets: [
             {
                 data: [a, b],
-                backgroundColor: ["#FF6384", "#EAEAEC"],
+                backgroundColor: ["#FF6384", "#EAEAEC", 'aqua'],
             
             },
         ],

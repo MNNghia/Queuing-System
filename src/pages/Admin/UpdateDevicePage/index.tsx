@@ -7,15 +7,12 @@ import { useDispatch } from "react-redux";
 import DropDown from "../../../components/DropDown";
 import CustomInput from "../../../components/input/CustomInput";
 import { Col, Row, Select } from "antd";
-import type { SelectProps } from "antd";
 import CustomButton from "../../../components/button";
 import { AppDispatch, RootState } from "../../../redux/store";
 import { fetchDevice, updateDevice } from "../../../redux/reducers/device";
 import { notification } from "antd";
 import { useSelector } from "react-redux";
-import { type } from "os";
-
-const options: SelectProps["options"] = [];
+import { useCookies } from "react-cookie";
 
 interface Device {
     idDevice: string;
@@ -33,7 +30,7 @@ type NotificationType = "success" | "info" | "warning" | "error";
 
 function UpdateDevicePage() {
     const [device, setDevice] = useState({} as Device);
-    
+
     const [api, contextHolder] = notification.useNotification();
 
     const dispatch = useDispatch<AppDispatch>();
@@ -53,18 +50,18 @@ function UpdateDevicePage() {
     const deviceId = urlParams.get("deviceId");
 
     useEffect(() => {
-            const index = data.findIndex((value) => value.id === deviceId);
-            if (data[index] && data[index].id) {
-                setDevice(data[index])
-            }
-    }, [dispatch, data, deviceId])
+        const index = data.findIndex((value) => value.id === deviceId);
+        if (data[index] && data[index].id) {
+            setDevice(data[index]);
+        }
+    }, [dispatch, data, deviceId]);
 
-    const handleUpdate= (type: NotificationType) => {
+    const handleUpdate = (type: NotificationType) => {
         if (typeNoti === "success") {
             dispatch(updateDevice(device));
         }
         openNotification(type);
-    }
+    };
 
     if (
         device.idDevice === undefined ||
@@ -87,13 +84,6 @@ function UpdateDevicePage() {
         typeNoti = "success";
     }
 
-    // ///add data
-    // const handleAddDevice = (type: NotificationType) => {
-    //     if (typeNoti === "success") {
-    //         dispatch(updateDevice(device));
-    //     }
-    //     openNotification(type);
-    // };
 
     useEffect(() => {
         const breadcrumbItems: BreadcrumbItem[] = [
@@ -259,10 +249,21 @@ function UpdateDevicePage() {
                                     }
                                     options={[
                                         {
-                                            value: "1",
-                                            label: "1 sdf sdf sfsdfsfsdf",
+                                            value: "Khám tim mạch",
+                                            label: "Khám tim mạch",
                                         },
-                                        { value: "2", label: "2" },
+                                        {
+                                            value: " Khám sản - Phụ khoa",
+                                            label: " Khám sản - Phụ khoa",
+                                        },
+                                        {
+                                            value: " Khám răng hàm mặt",
+                                            label: " Khám răng hàm mặt",
+                                        },
+                                        {
+                                            value: "Khám tai mũi họng",
+                                            label: " Khám tai mũi họng",
+                                        }
                                     ]}
                                 />
                             </Col>

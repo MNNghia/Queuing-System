@@ -51,7 +51,7 @@ function DevicePage() {
         handleSearch();
     }, [searchText, data]);
 
-    //funtion render data in table
+
 
     //Pagination
     useEffect(() => {
@@ -196,7 +196,7 @@ function DevicePage() {
                 <Link to="/device/listDevice/addDevice" className="button-add">
                     <img src={images.add.default} alt="" />
                     <br />
-                    Thêm dịch vụ
+                    Thêm thiết bị 
                 </Link>
             </div>
         </div>
